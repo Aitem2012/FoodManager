@@ -1,0 +1,12 @@
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Domain\bin\Debug\net6.0\FoodManager.Domain.deps.json
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Domain\bin\Debug\net6.0\FoodManager.Domain.dll
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Domain\bin\Debug\net6.0\FoodManager.Domain.pdb
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Domain\obj\Debug\net6.0\FoodManager.Domain.csproj.AssemblyReference.cache
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Domain\obj\Debug\net6.0\FoodManager.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Domain\obj\Debug\net6.0\FoodManager.Domain.AssemblyInfoInputs.cache
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Domain\obj\Debug\net6.0\FoodManager.Domain.AssemblyInfo.cs
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Domain\obj\Debug\net6.0\FoodManager.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Domain\obj\Debug\net6.0\FoodManager.Domain.dll
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Domain\obj\Debug\net6.0\refint\FoodManager.Domain.dll
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Domain\obj\Debug\net6.0\FoodManager.Domain.pdb
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Domain\obj\Debug\net6.0\ref\FoodManager.Domain.dll

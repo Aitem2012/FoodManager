@@ -1,0 +1,12 @@
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Services\bin\Debug\net6.0\FoodManager.Services.deps.json
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Services\bin\Debug\net6.0\FoodManager.Services.dll
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Services\bin\Debug\net6.0\FoodManager.Services.pdb
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Services\obj\Debug\net6.0\FoodManager.Services.csproj.AssemblyReference.cache
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Services\obj\Debug\net6.0\FoodManager.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Services\obj\Debug\net6.0\FoodManager.Services.AssemblyInfoInputs.cache
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Services\obj\Debug\net6.0\FoodManager.Services.AssemblyInfo.cs
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Services\obj\Debug\net6.0\FoodManager.Services.csproj.CoreCompileInputs.cache
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Services\obj\Debug\net6.0\FoodManager.Services.dll
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Services\obj\Debug\net6.0\refint\FoodManager.Services.dll
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Services\obj\Debug\net6.0\FoodManager.Services.pdb
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Services\obj\Debug\net6.0\ref\FoodManager.Services.dll
