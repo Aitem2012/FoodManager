@@ -20,10 +20,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\FoodManager.Persistence\FoodManager.Persistence.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Controllers\" />
+		<ProjectReference Include="..\FoodManager.Services\FoodManager.Services.csproj" />
 	</ItemGroup>
 
 </Project>

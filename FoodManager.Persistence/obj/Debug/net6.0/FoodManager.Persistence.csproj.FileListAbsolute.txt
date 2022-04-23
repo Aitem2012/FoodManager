@@ -17,3 +17,7 @@ C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Persistence\obj\Debug\
 C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Persistence\obj\Debug\net6.0\ref\FoodManager.Persistence.dll
 C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Persistence\bin\Debug\net6.0\FoodManager.Persistence.runtimeconfig.json
 C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Persistence\obj\Debug\net6.0\FoodManager.Persistence.genruntimeconfig.cache
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Persistence\bin\Debug\net6.0\FoodManager.Common.dll
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Persistence\bin\Debug\net6.0\FoodManager.Common.pdb
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Persistence\bin\Debug\net6.0\FoodManager.Services.dll
+C:\Users\Uawahab\source\repos\FoodManager.Api\FoodManager.Persistence\bin\Debug\net6.0\FoodManager.Services.pdb

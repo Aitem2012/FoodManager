@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodManager.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220420125405_Init")]
+    [Migration("20220423085402_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
