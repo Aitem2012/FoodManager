@@ -1,3 +1,4 @@
+using FoodManager.Application.Mapping;
 using FoodManager.Persistence.Extensions;
 using Microsoft.OpenApi.Models;
 
@@ -7,6 +8,8 @@ var config =builder.Configuration;
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(FoodManagerMapping));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo
@@ -16,7 +19,7 @@ builder.Services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo
 }));
 
 builder.Services.AddDatabaseServices(config);
-
+builder.Services.AddApplicationServices(config);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
