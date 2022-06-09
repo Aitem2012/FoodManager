@@ -2,6 +2,12 @@
 {
     public static class Extension
     {
+
+        public static string ConvertToPhoneNumber(this string str)
+        {
+            return $"+234{str.Substring(1)}";
+        }
+
         /// <summary>
         /// Generates a Slug text from a string
         /// </summary>

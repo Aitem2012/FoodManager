@@ -1,11 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "ymmPctNDP2cuhDYO7zeLSSWL9cCxE2Acu5vuMtaOs1b8cVh6YbK4I5w5TfhbKoO6yqd65GURVX0uk1+3XI5N8A==",
+  "dgSpecHash": "92LInkLoAancOKIp8C/K81GWrOYnr2cNepRzCDnQ0ihFjpOwqgWe6r+hC5edndJFJnuHl1G+6ID/hlSItOC8mA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Uawahab\\source\\repos\\FoodManager.Api\\FoodManager.Application\\FoodManager.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Uawahab\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\Uawahab\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
+    "C:\\Users\\Uawahab\\.nuget\\packages\\fluentvalidation\\10.4.0\\fluentvalidation.10.4.0.nupkg.sha512",
+    "C:\\Users\\Uawahab\\.nuget\\packages\\fluentvalidation.aspnetcore\\10.4.0\\fluentvalidation.aspnetcore.10.4.0.nupkg.sha512",
+    "C:\\Users\\Uawahab\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\10.4.0\\fluentvalidation.dependencyinjectionextensions.10.4.0.nupkg.sha512",
+    "C:\\Users\\Uawahab\\.nuget\\packages\\mediatr\\10.0.1\\mediatr.10.0.1.nupkg.sha512",
+    "C:\\Users\\Uawahab\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512",
+    "C:\\Users\\Uawahab\\.nuget\\packages\\mediatr.extensions.fluentvalidation.aspnetcore\\2.0.0\\mediatr.extensions.fluentvalidation.aspnetcore.2.0.0.nupkg.sha512",
     "C:\\Users\\Uawahab\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\Uawahab\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Uawahab\\.nuget\\packages\\microsoft.aspnetcore.authentication.cookies\\2.2.0\\microsoft.aspnetcore.authentication.cookies.2.2.0.nupkg.sha512",

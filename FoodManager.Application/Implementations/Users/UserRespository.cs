@@ -6,6 +6,7 @@ using FoodManager.Common.Extensions;
 using FoodManager.Common.Response;
 using FoodManager.Domain.Users;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 
@@ -77,6 +78,59 @@ namespace FoodManager.Application.Implementations.Users
                 throw new Exception("Username exist exception");
             }
 
+            return new BaseResponse<GetUserResponseObject>().CreateResponse("", true, _mapper.Map<GetUserResponseObject>(user));
+        }
+
+        public async Task<AppUser> GetUserByEmail(string email)
+        {
+            var user = await _userManager.FindByNameAsync(email);
+            if (user == null)
+            {
+                _logger.LogInformation($"No user with email {email}");
+                return null;
+            }
+            return user;
+        }
+
+        public async Task<AppUser> GetUserById(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                _logger.LogInformation($"No user with Id: {id}");
+                return null;
+            }
+            return user;
+        }
+
+        public async Task<IEnumerable<AppUser>> GetUsers()
+        {
+            var users = await _context.Users.ToListAsync();
+            if (!users.Any())
+            {
+                _logger.LogInformation($"A call to all users made at {DateTime.Now} but no users exist in the db");
+            }
+            return users;
+        }
+
+        public async Task<BaseResponse<GetUserResponseObject>> UpdateUser(UpdateUserDto model, CancellationToken cancellation)
+        {
+            _logger.LogInformation($"User update called for user with Id: {model.Id} at {DateTime.Now}");
+            var userInDb = await _context.Users.FirstOrDefaultAsync(x => x.Id.Equals(model.Id), cancellation);
+            if (userInDb == null)
+            {
+                _logger.LogInformation($"No User with ID: {model.Id}");
+                return new BaseResponse<GetUserResponseObject>().CreateResponse($"No user with Id: {model.Id}", false, null);
+            }
+            var user = _mapper.Map(model, userInDb);
+            user.InviteCode = model.LastName.GenerateRef();
+            user.ReferralCode = model.FirstName.GenerateReferralCode();
+            _context.Users.Attach(user);
+            if (!(await _context.SaveChangesAsync(cancellation)> 0))
+            {
+                _logger.LogInformation($"User could not be updated.");
+                return new BaseResponse<GetUserResponseObject>().CreateResponse($"User could not be updated.", false, null);
+            }
             return new BaseResponse<GetUserResponseObject>().CreateResponse("", true, _mapper.Map<GetUserResponseObject>(user));
         }
     }

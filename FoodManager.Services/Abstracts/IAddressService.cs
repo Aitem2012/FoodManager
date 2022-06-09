@@ -4,6 +4,6 @@ namespace FoodManager.Services.Abstracts
 {
     public interface IAddressService
     {
-        public Task<int> CreaateAddress(CreateAddressDto address, CancellationToken cancellationToken);
+        public Task<int> CreateAddress(CreateAddressDto address, CancellationToken cancellationToken);
     }
 }

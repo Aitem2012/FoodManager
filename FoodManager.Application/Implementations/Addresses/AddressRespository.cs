@@ -17,11 +17,9 @@ namespace FoodManager.Application.Implementations.Addresses
             _mapper = mapper;
         }
 
-        public async Task<int> CreaateAddress(CreateAddressDto address, CancellationToken cancellationToken)
+        public async Task<int> CreateAddress(Address address, CancellationToken cancellationToken)
         {
-            var userAddress = _mapper.Map<Address>(address);
-
-            _context.Addresses.Add(userAddress);
+            _context.Addresses.Add(address);
             return await _context.SaveChangesAsync(cancellationToken);
         }
     }
