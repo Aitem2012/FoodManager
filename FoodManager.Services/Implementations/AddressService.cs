@@ -1,5 +1,7 @@
-﻿using FoodManager.Application.DTO.Addresses;
+﻿using AutoMapper;
+using FoodManager.Application.DTO.Addresses;
 using FoodManager.Application.Interfaces.Repositories;
+using FoodManager.Domain.Users;
 using FoodManager.Services.Abstracts;
 
 namespace FoodManager.Services.Implementations
@@ -7,15 +9,17 @@ namespace FoodManager.Services.Implementations
     public class AddressService : IAddressService
     {
         private readonly IAddressRepository _addressRepository;
-
-        public AddressService(IAddressRepository addressRepository)
+        private readonly IMapper _mapper;
+        public AddressService(IAddressRepository addressRepository, IMapper mapper)
         {
             _addressRepository = addressRepository;
+            _mapper = mapper;
         }
 
-        public async Task<int> CreaateAddress(CreateAddressDto address, CancellationToken cancellationToken)
+        public async Task<int> CreateAddress(CreateAddressDto address, CancellationToken cancellationToken)
         {
-            return await _addressRepository.CreaateAddress(address, cancellationToken);
+            var userAddress = _mapper.Map<Address>(address);
+            return await _addressRepository.CreateAddress(userAddress, cancellationToken);
         }
     }
 }
