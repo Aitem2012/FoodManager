@@ -11,7 +11,6 @@ namespace FoodManager.Application.DTO.Users
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public string PhoneNumber { get; set; }
-        public CreateAddressDto Address { get; set; }
         public string Role { get; set; }
     }
 }

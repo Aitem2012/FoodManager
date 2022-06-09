@@ -33,6 +33,10 @@ namespace FoodManager.Persistence.Extensions
             services.AddScoped<IUserRepository, UserRespository>();
             services.AddScoped<IAddressRepository, AddressRespository>();
             services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<ISmsService, SmsService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IAuthService, AuthService>();
         }
     }
 }

@@ -360,6 +360,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Twilio": {
+              "target": "Package",
+              "version": "[5.75.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

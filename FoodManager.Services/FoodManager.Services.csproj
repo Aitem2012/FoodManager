@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Twilio" Version="5.75.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FoodManager.Application\FoodManager.Application.csproj" />
     <ProjectReference Include="..\FoodManager.Common\FoodManager.Common.csproj" />
   </ItemGroup>

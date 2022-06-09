@@ -1,3 +1,4 @@
+using FoodManager.Application.DTO.JWT;
 using FoodManager.Application.Mapping;
 using FoodManager.Persistence.Extensions;
 using Microsoft.OpenApi.Models;
@@ -20,6 +21,8 @@ builder.Services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo
 
 builder.Services.AddDatabaseServices(config);
 builder.Services.AddApplicationServices(config);
+builder.Services.Configure<JWTData>(config.GetSection(JWTData.Data));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
