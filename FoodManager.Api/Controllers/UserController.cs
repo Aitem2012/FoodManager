@@ -1,5 +1,6 @@
 ﻿using FoodManager.Application.DTO.Users;
 using FoodManager.Services.Abstracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodManager.Api.Controllers
@@ -8,6 +9,7 @@ namespace FoodManager.Api.Controllers
     /// This handles all requests for users
     /// </summary>
     [Route("[controller]")]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
