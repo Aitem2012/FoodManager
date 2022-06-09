@@ -46,5 +46,39 @@ namespace FoodManager.Api.Controllers
         {
             return Ok(await _authService.Login(model));
         }
+
+        /// <summary>
+        /// Forgot password
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost("forgotpassword/{email}", Name = nameof(ForgotPassword)), ProducesResponseType(typeof(string), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        public async Task<IActionResult> ForgotPassword([FromRoute] string email)
+        {
+            return Ok(await _authService.ForgotPassword(email));
+        }
+
+        /// <summary>
+        /// Forgot password
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost("resetpassword", Name = nameof(ResetPassword)), ProducesResponseType(typeof(bool), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetUserPasswordDto model)
+        {
+            return Ok(await _authService.ResetPassword(model));
+        }
+
+        /// <summary>
+        /// SignOut
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost("signout/{email}", Name = nameof(Logout)), ProducesResponseType(typeof(bool), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        public async Task<IActionResult> Logout(string email)
+        {
+            //TODO: Properly implement signout
+            return Ok(await _authService.SignOut(email));
+        }
     }
 }
