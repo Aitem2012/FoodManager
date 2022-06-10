@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FoodManager.Application.DTO.Addresses;
 using FoodManager.Application.Interfaces.Repositories;
+using FoodManager.Common.Response;
 using FoodManager.Domain.Users;
 using FoodManager.Services.Abstracts;
 
@@ -20,6 +21,16 @@ namespace FoodManager.Services.Implementations
         {
             var userAddress = _mapper.Map<Address>(address);
             return await _addressRepository.CreateAddress(userAddress, cancellationToken);
+        }
+
+        public async Task<BaseResponse<GetAddressResponseObject>> GetAddress(string AppUserId)
+        {
+            return await _addressRepository.GetAddress(AppUserId);
+        }
+
+        public async Task<BaseResponse<GetAddressResponseObject>> UpdateAddressAsync(UpdateAddressDto address, CancellationToken cancellationToken)
+        {
+            return await _addressRepository.UpdateAddressAsync(address, cancellationToken);
         }
     }
 }
