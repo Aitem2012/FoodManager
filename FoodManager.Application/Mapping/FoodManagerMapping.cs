@@ -20,6 +20,8 @@ namespace FoodManager.Application.Mapping
             CreateMap<UpdateUserDto, AppUser>();
             CreateMap<AppUser, UserLoginResponseDto>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => $"{x.FirstName} {x.LastName}"));
+
+            CreateMap<UpdateAddressDto, Address>();
         }
     }
 }

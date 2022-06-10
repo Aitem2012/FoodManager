@@ -1,8 +1,8 @@
 ﻿namespace FoodManager.Application.DTO.Addresses
 {
-    public class GetAddressResponseObject
+    public class UpdateAddressDto
     {
-        public Guid Id { get; set; }
+        public Guid AddressId { get; set; }
         public string AppUserId { get; set; }
         public string Street { get; set; }
         public string City { get; set; }

@@ -1,8 +1,10 @@
 using FluentValidation.AspNetCore;
 using FoodManager.Application.DTO.JWT;
+using FoodManager.Application.DTO.Users;
 using FoodManager.Application.Mapping;
 using FoodManager.Application.Validators;
 using FoodManager.Persistence.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -15,13 +17,14 @@ var config =builder.Configuration;
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(FoodManagerMapping));
 
-builder.Services.AddControllers()
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers().SetCompatibilityVersion(CompatibilityVersion.Latest)
     .AddFluentValidation(opt =>
     {
         opt.RegisterValidatorsFromAssembly(typeof(CreateUserDtoValidator).GetTypeInfo()
             .Assembly);
     });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 
 
@@ -72,7 +75,7 @@ builder.Services.AddDatabaseServices(config);
 builder.Services.AddApplicationServices(config);
 builder.Services.Configure<JWTData>(config.GetSection(JWTData.Data));
 builder.Services.AddAuthenticationServices(config);
-builder.Services.AddValidationService(config);
+//builder.Services.AddValidationService(config);
 builder.Services.AddMediatorBehavior();
 
 var app = builder.Build();

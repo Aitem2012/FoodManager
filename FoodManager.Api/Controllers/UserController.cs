@@ -58,7 +58,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost("{id}", Name = nameof(GetUserById)), ProducesResponseType(typeof(GetUserResponseObject), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpGet("{id}", Name = nameof(GetUserById)), ProducesResponseType(typeof(GetUserResponseObject), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> GetUserById([FromRoute] string id)
         {
             return Ok(await _userService.GetUserById(id));

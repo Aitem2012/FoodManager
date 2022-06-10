@@ -1,6 +1,4 @@
-﻿using FluentValidation.AspNetCore;
-using FoodManager.Application.Behaviors;
-using FoodManager.Application.DTO.Users;
+﻿using FoodManager.Application.Behaviors;
 using FoodManager.Application.Implementations.Addresses;
 using FoodManager.Application.Implementations.Users;
 using FoodManager.Application.Interfaces.Persistence;
@@ -13,12 +11,10 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Reflection;
 using System.Text;
 
 namespace FoodManager.Persistence.Extensions
@@ -70,17 +66,6 @@ namespace FoodManager.Persistence.Extensions
             {
                 options.ForwardAuthenticate = CookieAuthenticationDefaults.AuthenticationScheme;
             });
-        }
-
-        public static void AddValidationService(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddControllers().SetCompatibilityVersion(CompatibilityVersion.Latest)
-                 .AddFluentValidation(opt =>
-                 {
-                     opt.RegisterValidatorsFromAssembly(typeof(CreateUserDto).GetTypeInfo()
-                             .Assembly);
-                 });
-
         }
 
         public static void AddMediatorBehavior(this IServiceCollection services)
