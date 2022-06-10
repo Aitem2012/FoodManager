@@ -25,19 +25,19 @@ namespace FoodManager.Application.Implementations.Addresses
             return await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<BaseResponse<GetAddressResponseObject>> GetAddress(string AppUserId)
+        public async Task<BaseResponse<GetAddressResponseObjectDto>> GetAddress(string AppUserId)
         {
             var address = await _context.Addresses.SingleOrDefaultAsync(x => x.AppUserId.Equals(AppUserId));
-            return new BaseResponse<GetAddressResponseObject>().CreateResponse("", true, _mapper.Map<GetAddressResponseObject>(address));
+            return new BaseResponse<GetAddressResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetAddressResponseObjectDto>(address));
         }
 
-        public async Task<BaseResponse<GetAddressResponseObject>> UpdateAddressAsync(UpdateAddressDto address, CancellationToken cancellationToken)
+        public async Task<BaseResponse<GetAddressResponseObjectDto>> UpdateAddressAsync(UpdateAddressDto address, CancellationToken cancellationToken)
         {
             var addressInDb = await _context.Addresses.SingleOrDefaultAsync(x => x.Id.Equals(address.AddressId) && x.AppUserId.Equals(address.AppUserId));
             var theAddress = _mapper.Map(address, addressInDb);
             _context.Addresses.Attach(theAddress);
             await _context.SaveChangesAsync(cancellationToken);
-            return new BaseResponse<GetAddressResponseObject>().CreateResponse("", true, _mapper.Map<GetAddressResponseObject>(theAddress));
+            return new BaseResponse<GetAddressResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetAddressResponseObjectDto>(theAddress));
         }
     }
 }
