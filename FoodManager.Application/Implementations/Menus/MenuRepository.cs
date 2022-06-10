@@ -12,23 +12,21 @@ namespace FoodManager.Application.Implementations.Menus
     {
         private readonly IAppDbContext _context;
         private readonly IMapper _mapper;
-        private readonly CancellationToken _cancellationToken;
-        public MenuRepository(IAppDbContext context, IMapper mapper, CancellationToken cancellationToken)
+        public MenuRepository(IAppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _cancellationToken = cancellationToken;
         }
 
-        public async Task<BaseResponse<GetMenuResponseObjectDto>> CreateMenuAsync(CreateMenuDto menu)
+        public async Task<BaseResponse<GetMenuResponseObjectDto>> CreateMenuAsync(CreateMenuDto menu, CancellationToken cancellationToken)
         {
             var theMenu = _mapper.Map<Menu>(menu);
             _context.Menus.Add(theMenu);
-            await _context.SaveChangesAsync(_cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
             return new BaseResponse<GetMenuResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetMenuResponseObjectDto>(theMenu));
         }
 
-        public async Task<BaseResponse<bool>> DeleteMenuAsync(Guid menuId)
+        public async Task<BaseResponse<bool>> DeleteMenuAsync(Guid menuId, CancellationToken cancellationToken)
         {
             var menu = await _context.Menus.SingleOrDefaultAsync(x => x.Id.Equals(menuId));
             if (menu == null)
@@ -36,7 +34,7 @@ namespace FoodManager.Application.Implementations.Menus
                 return new BaseResponse<bool>().CreateResponse($"No menu with Id: {menuId}", false, false);
             }
             _context.Menus.Remove(menu);
-            await _context.SaveChangesAsync(_cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
             return new BaseResponse<bool>().CreateResponse($"Menu with Id: {menuId} has been deleted successfully", true, true);
         }
 
@@ -58,7 +56,7 @@ namespace FoodManager.Application.Implementations.Menus
             return new BaseResponse<IEnumerable<GetMenuResponseObjectDto>>().CreateResponse("", true, _mapper.Map<IEnumerable<GetMenuResponseObjectDto>>(menus));
         }
 
-        public async Task<BaseResponse<GetMenuResponseObjectDto>> UpdateMenuAsync(UpdateMenuDto menu)
+        public async Task<BaseResponse<GetMenuResponseObjectDto>> UpdateMenuAsync(UpdateMenuDto menu, CancellationToken cancellationToken)
         {
             var menuInDb = await _context.Menus.SingleOrDefaultAsync(x => x.Id.Equals(menu.MenuId));
             if (menuInDb == null)
@@ -67,7 +65,7 @@ namespace FoodManager.Application.Implementations.Menus
             }
             var theMenu = _mapper.Map(menu, menuInDb);
             _context.Menus.Attach(theMenu);
-            await _context.SaveChangesAsync(_cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
             return new BaseResponse<GetMenuResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetMenuResponseObjectDto>(theMenu));
         }
     }

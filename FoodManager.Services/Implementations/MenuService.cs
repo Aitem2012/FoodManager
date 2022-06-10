@@ -19,12 +19,12 @@ namespace FoodManager.Services.Implementations
 
         public async Task<BaseResponse<GetMenuResponseObjectDto>> CreateMenuAsync(CreateMenuDto menu)
         {
-            return await _menuRepository.CreateMenuAsync(menu);
+            return await _menuRepository.CreateMenuAsync(menu, new CancellationToken());
         }
 
         public async Task<BaseResponse<bool>> DeleteMenuAsync(Guid menuId)
         {
-            return await _menuRepository.DeleteMenuAsync(menuId);
+            return await _menuRepository.DeleteMenuAsync(menuId, new CancellationToken());
         }
 
         public async Task<BaseResponse<IEnumerable<GetMenuResponseObjectDto>>> GetAvailableMenuAsync()
@@ -44,7 +44,7 @@ namespace FoodManager.Services.Implementations
 
         public async Task<BaseResponse<GetMenuResponseObjectDto>> UpdateMenuAsync(UpdateMenuDto menu)
         {
-            return await _menuRepository.UpdateMenuAsync(menu);
+            return await _menuRepository.UpdateMenuAsync(menu, new CancellationToken());
         }
     }
 }

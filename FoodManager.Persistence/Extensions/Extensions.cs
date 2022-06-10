@@ -1,5 +1,6 @@
 ﻿using FoodManager.Application.Behaviors;
 using FoodManager.Application.Implementations.Addresses;
+using FoodManager.Application.Implementations.Menus;
 using FoodManager.Application.Implementations.Users;
 using FoodManager.Application.Interfaces.Persistence;
 using FoodManager.Application.Interfaces.Repositories;
@@ -43,6 +44,8 @@ namespace FoodManager.Persistence.Extensions
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IMenuRepository, MenuRepository>();
+            services.AddScoped<IMenuService, MenuService>();
         }
 
         public static void AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
