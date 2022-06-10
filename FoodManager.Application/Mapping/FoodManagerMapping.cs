@@ -13,9 +13,9 @@ namespace FoodManager.Application.Mapping
             AllowNullDestinationValues = true;
 
             CreateMap<CreateUserDto, AppUser>();
-            CreateMap<AppUser, GetUserResponseObject>();
+            CreateMap<AppUser, GetUserResponseObjectDto>();
             CreateMap<CreateAddressDto, Address>();
-            CreateMap<Address, GetAddressResponseObject>();
+            CreateMap<Address, GetAddressResponseObjectDto>();
 
             CreateMap<UpdateUserDto, AppUser>();
             CreateMap<AppUser, UserLoginResponseDto>()

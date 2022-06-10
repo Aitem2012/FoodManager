@@ -22,7 +22,7 @@ namespace FoodManager.Services.Implementations
             _smsService = smsService;
         }
 
-        public async Task<BaseResponse<GetUserResponseObject>> CreateUser(CreateUserDto model, CancellationToken cancellationToken)
+        public async Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model, CancellationToken cancellationToken)
         {
             model.PhoneNumber = model.PhoneNumber.ConvertToPhoneNumber();
             //TODO: send sms
@@ -30,37 +30,37 @@ namespace FoodManager.Services.Implementations
             return await _userRespository.CreateUser(model, cancellationToken);
         }
 
-        public async Task<BaseResponse<GetUserResponseObject>> GetUserByEmail(string email)
+        public async Task<BaseResponse<GetUserResponseObjectDto>> GetUserByEmail(string email)
         {
             var user = await _userRespository.GetUserByEmail(email);
             if (user == null)
             {
-                return new BaseResponse<GetUserResponseObject>().CreateResponse($"No user with email: {email}", false, null);
+                return new BaseResponse<GetUserResponseObjectDto>().CreateResponse($"No user with email: {email}", false, null);
             }
-            return new BaseResponse<GetUserResponseObject>().CreateResponse("", true, _mapper.Map<GetUserResponseObject>(user));
+            return new BaseResponse<GetUserResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetUserResponseObjectDto>(user));
         }
 
-        public async Task<BaseResponse<GetUserResponseObject>> GetUserById(string id)
+        public async Task<BaseResponse<GetUserResponseObjectDto>> GetUserById(string id)
         {
             var user = await _userRespository.GetUserById(id);
             if (user == null)
             {
-                return new BaseResponse<GetUserResponseObject>().CreateResponse($"No user with Id: {id}", false, null);
+                return new BaseResponse<GetUserResponseObjectDto>().CreateResponse($"No user with Id: {id}", false, null);
             }
-            return new BaseResponse<GetUserResponseObject>().CreateResponse("", true, _mapper.Map<GetUserResponseObject>(user));
+            return new BaseResponse<GetUserResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetUserResponseObjectDto>(user));
         }
 
-        public async Task<BaseResponse<IEnumerable<GetUserResponseObject>>> GetUsers()
+        public async Task<BaseResponse<IEnumerable<GetUserResponseObjectDto>>> GetUsers()
         {
             var users = await _userRespository.GetUsers();
             if (!users.Any())
             {
-                return new BaseResponse<IEnumerable<GetUserResponseObject>>().CreateResponse($"No users existed yet", false, null);
+                return new BaseResponse<IEnumerable<GetUserResponseObjectDto>>().CreateResponse($"No users existed yet", false, null);
             }
-            return new BaseResponse<IEnumerable<GetUserResponseObject>>().CreateResponse("", true, _mapper.Map<IEnumerable<GetUserResponseObject>>(users));
+            return new BaseResponse<IEnumerable<GetUserResponseObjectDto>>().CreateResponse("", true, _mapper.Map<IEnumerable<GetUserResponseObjectDto>>(users));
         }
 
-        public async Task<BaseResponse<GetUserResponseObject>> UpdateUser(UpdateUserDto model, CancellationToken cancellation)
+        public async Task<BaseResponse<GetUserResponseObjectDto>> UpdateUser(UpdateUserDto model, CancellationToken cancellation)
         {
             return await _userRespository.UpdateUser(model, cancellation);
         }

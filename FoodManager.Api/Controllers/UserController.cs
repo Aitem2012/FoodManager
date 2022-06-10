@@ -25,7 +25,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpGet(Name = nameof(GetUsers)), ProducesResponseType(typeof(GetUserResponseObject), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpGet(Name = nameof(GetUsers)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> GetUsers()
         {
             return Ok(await _userService.GetUsers());
@@ -36,7 +36,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPost(Name = nameof(CreateUser)), ProducesResponseType(typeof(GetUserResponseObject), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpPost(Name = nameof(CreateUser)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserDto model)
         {
             return Ok(await _userService.CreateUser(model, new CancellationToken()));
@@ -47,7 +47,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPut("updateuser",Name = nameof(UpdateUser)), ProducesResponseType(typeof(GetUserResponseObject), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpPut("updateuser",Name = nameof(UpdateUser)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto model)
         {
             return Ok(await _userService.UpdateUser(model, new CancellationToken()));
@@ -58,7 +58,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}", Name = nameof(GetUserById)), ProducesResponseType(typeof(GetUserResponseObject), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpGet("{id}", Name = nameof(GetUserById)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> GetUserById([FromRoute] string id)
         {
             return Ok(await _userService.GetUserById(id));
@@ -69,7 +69,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        [HttpPost("/{email}", Name = nameof(GetUserByEmail)), ProducesResponseType(typeof(GetUserResponseObject), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpPost("/{email}", Name = nameof(GetUserByEmail)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> GetUserByEmail([FromRoute] string email)
         {
             return Ok(await _userService.GetUserByEmail(email));

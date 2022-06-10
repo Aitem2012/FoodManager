@@ -32,7 +32,7 @@ namespace FoodManager.Application.Implementations.Users
             _logger = logger;
         }
 
-        public async Task<BaseResponse<GetUserResponseObject>> CreateUser(CreateUserDto model, CancellationToken cancellation)
+        public async Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model, CancellationToken cancellation)
         {
             _logger.LogInformation($"Creating User Started => Name: {model.FirstName} {model.LastName} | Email: {model.Email} | PhoneNumber: {model.PhoneNumber} | Role: {model.Role} ");
             var user = _mapper.Map<AppUser>(model);
@@ -78,7 +78,7 @@ namespace FoodManager.Application.Implementations.Users
                 throw new Exception("Username exist exception");
             }
 
-            return new BaseResponse<GetUserResponseObject>().CreateResponse("", true, _mapper.Map<GetUserResponseObject>(user));
+            return new BaseResponse<GetUserResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetUserResponseObjectDto>(user));
         }
 
         public async Task<AppUser> GetUserByEmail(string email)
@@ -113,14 +113,14 @@ namespace FoodManager.Application.Implementations.Users
             return users;
         }
 
-        public async Task<BaseResponse<GetUserResponseObject>> UpdateUser(UpdateUserDto model, CancellationToken cancellation)
+        public async Task<BaseResponse<GetUserResponseObjectDto>> UpdateUser(UpdateUserDto model, CancellationToken cancellation)
         {
             _logger.LogInformation($"User update called for user with Id: {model.Id} at {DateTime.Now}");
             var userInDb = await _context.Users.FirstOrDefaultAsync(x => x.Id.Equals(model.Id), cancellation);
             if (userInDb == null)
             {
                 _logger.LogInformation($"No User with ID: {model.Id}");
-                return new BaseResponse<GetUserResponseObject>().CreateResponse($"No user with Id: {model.Id}", false, null);
+                return new BaseResponse<GetUserResponseObjectDto>().CreateResponse($"No user with Id: {model.Id}", false, null);
             }
             var user = _mapper.Map(model, userInDb);
             user.InviteCode = model.LastName.GenerateRef();
@@ -129,9 +129,9 @@ namespace FoodManager.Application.Implementations.Users
             if (!(await _context.SaveChangesAsync(cancellation)> 0))
             {
                 _logger.LogInformation($"User could not be updated.");
-                return new BaseResponse<GetUserResponseObject>().CreateResponse($"User could not be updated.", false, null);
+                return new BaseResponse<GetUserResponseObjectDto>().CreateResponse($"User could not be updated.", false, null);
             }
-            return new BaseResponse<GetUserResponseObject>().CreateResponse("", true, _mapper.Map<GetUserResponseObject>(user));
+            return new BaseResponse<GetUserResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetUserResponseObjectDto>(user));
         }
     }
 }
