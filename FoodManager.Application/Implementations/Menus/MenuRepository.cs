@@ -18,9 +18,10 @@ namespace FoodManager.Application.Implementations.Menus
             _mapper = mapper;
         }
 
-        public async Task<BaseResponse<GetMenuResponseObjectDto>> CreateMenuAsync(CreateMenuDto menu, CancellationToken cancellationToken)
+        public async Task<BaseResponse<GetMenuResponseObjectDto>> CreateMenuAsync(CreateMenuDto menu, string imageUrl, CancellationToken cancellationToken)
         {
             var theMenu = _mapper.Map<Menu>(menu);
+            theMenu.ImageUrl = imageUrl;
             _context.Menus.Add(theMenu);
             await _context.SaveChangesAsync(cancellationToken);
             return new BaseResponse<GetMenuResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetMenuResponseObjectDto>(theMenu));
@@ -47,6 +48,10 @@ namespace FoodManager.Application.Implementations.Menus
         public async Task<BaseResponse<GetMenuResponseObjectDto>> GetMenuByIdAsync(Guid menuId)
         {
             var menu = await _context.Menus.SingleOrDefaultAsync(x => x.Id.Equals(menuId));
+            if (menu == null)
+            {
+                return new BaseResponse<GetMenuResponseObjectDto>().CreateResponse($"No menu with Id: {menuId}", false, null);
+            }
             return new BaseResponse<GetMenuResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetMenuResponseObjectDto>(menu));
         }
 
@@ -67,6 +72,19 @@ namespace FoodManager.Application.Implementations.Menus
             _context.Menus.Attach(theMenu);
             await _context.SaveChangesAsync(cancellationToken);
             return new BaseResponse<GetMenuResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetMenuResponseObjectDto>(theMenu));
+        }
+
+        public async Task<BaseResponse<GetMenuResponseObjectDto>> UpdateMenuImageAsync(Guid menuId, string imageUrl, CancellationToken cancellationToken)
+        {
+            var menu = await _context.Menus.SingleOrDefaultAsync(x => x.Id.Equals(menuId), cancellationToken);
+            if (menu == null)
+            {
+                return new BaseResponse<GetMenuResponseObjectDto>().CreateResponse($"No menu with Id: {menuId}", false, null);
+            }
+            menu.ImageUrl = imageUrl;
+            _context.Menus.Attach(menu);
+            await _context.SaveChangesAsync(cancellationToken);
+            return new BaseResponse<GetMenuResponseObjectDto>().CreateResponse("Image uploaded successfully", true, _mapper.Map<GetMenuResponseObjectDto>(menu));
         }
     }
 }

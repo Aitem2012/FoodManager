@@ -8,7 +8,6 @@ namespace FoodManager.Application.DTO.Menus
         public string Description { get; set; }
         public bool IsAvailable { get; set; }
         public decimal UnitPrice { get; set; }
-        public string ImageUrl { get; set; }
         public Size Size { get; set; }
         public string Ingredients { get; set; }
         public string Instruction { get; set; }

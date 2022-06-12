@@ -2,6 +2,7 @@
 using FoodManager.Application.DTO.Addresses;
 using FoodManager.Application.DTO.Menus;
 using FoodManager.Application.DTO.Users;
+using FoodManager.Domain.Enums;
 using FoodManager.Domain.Menus;
 using FoodManager.Domain.Users;
 
@@ -26,7 +27,8 @@ namespace FoodManager.Application.Mapping
             CreateMap<UpdateAddressDto, Address>();
             CreateMap<CreateMenuDto, Menu>();
             CreateMap<UpdateMenuDto, Menu>();
-            CreateMap<Menu, GetMenuResponseObjectDto>();
+            CreateMap<Menu, GetMenuResponseObjectDto>()
+                .ForMember(dest => dest.Size, opt => opt.MapFrom(src => (Size)src.Size));
         }
     }
 }

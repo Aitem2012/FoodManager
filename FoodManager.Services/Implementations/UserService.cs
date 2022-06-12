@@ -22,12 +22,12 @@ namespace FoodManager.Services.Implementations
             _smsService = smsService;
         }
 
-        public async Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model, CancellationToken cancellationToken)
+        public async Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model, CancellationToken cancellationToken, string role)
         {
             model.PhoneNumber = model.PhoneNumber.ConvertToPhoneNumber();
             //TODO: send sms
             //await _smsService.SendSmsAsync(model.PhoneNumber);
-            return await _userRespository.CreateUser(model, cancellationToken);
+            return await _userRespository.CreateUser(model, cancellationToken, role);
         }
 
         public async Task<BaseResponse<GetUserResponseObjectDto>> GetUserByEmail(string email)
