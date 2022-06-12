@@ -39,7 +39,7 @@ namespace FoodManager.Api.Controllers
         [HttpPost(Name = nameof(CreateUser)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserDto model)
         {
-            return Ok(await _userService.CreateUser(model, new CancellationToken()));
+            return Ok(await _userService.CreateUser(model, new CancellationToken(), ""));
         }
 
         /// <summary>

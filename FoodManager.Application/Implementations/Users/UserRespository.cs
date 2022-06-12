@@ -32,9 +32,9 @@ namespace FoodManager.Application.Implementations.Users
             _logger = logger;
         }
 
-        public async Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model, CancellationToken cancellation)
+        public async Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model, CancellationToken cancellation, string role = "")
         {
-            _logger.LogInformation($"Creating User Started => Name: {model.FirstName} {model.LastName} | Email: {model.Email} | PhoneNumber: {model.PhoneNumber} | Role: {model.Role} ");
+            _logger.LogInformation($"Creating User Started => Name: {model.FirstName} {model.LastName} | Email: {model.Email} | PhoneNumber: {model.PhoneNumber} | Role: {role} ");
             var user = _mapper.Map<AppUser>(model);
             if (user == null) throw new NotImplementedException();
 
@@ -51,18 +51,19 @@ namespace FoodManager.Application.Implementations.Users
 
             if (!_userManager.Users.Any(e => e.UserName.Equals(user.UserName)))
             {
-                if (!(await _roleManager.RoleExistsAsync(model.Role)))
+                var userRole = new IdentityResult();
+                if (!string.IsNullOrEmpty(role) && !(await _roleManager.RoleExistsAsync(role)))
                 {
-                    var role = await _roleManager.CreateAsync(new IdentityRole(model.Role));
+                    userRole = await _roleManager.CreateAsync(new IdentityRole(role));
                 }
                 
                 // Creating User and Adding to Role
                 var result = _userManager.CreateAsync(user, model.Password).Result;
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, model.Role);
+                    await _userManager.AddToRoleAsync(user, role);
                     await _userManager.AddClaimsAsync(user, new Claim[]{
-                        new Claim(ClaimTypes.Role, model.Role),
+                        new Claim(ClaimTypes.Role, role),
                         new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
                         new Claim(ClaimTypes.GivenName, user.FirstName),
                         new Claim(ClaimTypes.Surname, user.LastName),
@@ -70,11 +71,11 @@ namespace FoodManager.Application.Implementations.Users
                     });
                 }
 
-                _logger.LogInformation($"User Successfully Created => Name: {model.FirstName} {model.LastName} | Email: {model.Email} | PhoneNumber: {model.PhoneNumber} | Role: {model.Role}");
+                _logger.LogInformation($"User Successfully Created => Name: {model.FirstName} {model.LastName} | Email: {model.Email} | PhoneNumber: {model.PhoneNumber} | Role: {role}");
             }
             else
             {
-                _logger.LogInformation($"User Creation Failed => Name: {model.FirstName} {model.LastName} | Email: {model.Email} | PhoneNumber: {model.PhoneNumber} | Role: {model.Role}");
+                _logger.LogInformation($"User Creation Failed => Name: {model.FirstName} {model.LastName} | Email: {model.Email} | PhoneNumber: {model.PhoneNumber} | Role: {role}");
                 throw new Exception("Username exist exception");
             }
 
