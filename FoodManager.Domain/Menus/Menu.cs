@@ -13,5 +13,7 @@ namespace FoodManager.Domain.Menus
         public Size Size { get; set; }
         public string Ingredients { get; set; }
         public string Instruction { get; set; }
+        public Guid CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }

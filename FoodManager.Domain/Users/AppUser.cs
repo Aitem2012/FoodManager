@@ -15,5 +15,6 @@ namespace FoodManager.Domain.Users
         public bool EmailNotification { get; set; }
         public bool InAppNotification { get; set; }
         public ICollection<Order> Orders { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
