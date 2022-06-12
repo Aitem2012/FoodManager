@@ -73,7 +73,7 @@ builder.Services.AddSwaggerGen(c => {
 
 builder.Services.AddDatabaseServices(config);
 builder.Services.AddApplicationServices(config);
-builder.Services.Configure<JWTData>(config.GetSection(JWTData.Data));
+builder.Services.AddConfiguredService(config);
 builder.Services.AddAuthenticationServices(config);
 //builder.Services.AddValidationService(config);
 builder.Services.AddMediatorBehavior();

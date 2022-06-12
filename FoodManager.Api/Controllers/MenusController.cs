@@ -1,12 +1,6 @@
 ﻿using FoodManager.Application.DTO.Menus;
 using FoodManager.Services.Abstracts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoodManager.Api.Controllers
 {
@@ -14,7 +8,7 @@ namespace FoodManager.Api.Controllers
     /// This handles all requests for menus
     /// </summary>
     [Route("[controller]")]
-    [Authorize]
+    //[Authorize]
     public class MenusController : ControllerBase
     {
         private readonly ILogger<MenusController> _logger;
@@ -51,11 +45,12 @@ namespace FoodManager.Api.Controllers
         /// creates a new menu
         /// </summary>
         /// <param name="model"></param>
+        /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost(Name = nameof(CreateMenu)), ProducesResponseType(typeof(GetMenuResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
-        public async Task<IActionResult> CreateMenu([FromBody] CreateMenuDto model)
+        public async Task<IActionResult> CreateMenu([FromBody] CreateMenuDto model, IFormFile file)
         {
-            return Ok(await _menuService.CreateMenuAsync(model));
+            return Ok(await _menuService.CreateMenuAsync(model, file));
         }
 
         /// <summary>
@@ -67,6 +62,18 @@ namespace FoodManager.Api.Controllers
         public async Task<IActionResult> UpdateMenu([FromBody] UpdateMenuDto model)
         {
             return Ok(await _menuService.UpdateMenuAsync(model));
+        }
+
+        /// <summary>
+        /// Update a menu
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="menuId"></param>
+        /// <returns></returns>
+        [HttpPut("update-menu-image", Name = nameof(UpdateMenuImage)), ProducesResponseType(typeof(GetMenuResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        public async Task<IActionResult> UpdateMenuImage(IFormFile file, Guid menuId)
+        {
+            return Ok(await _menuService.UpdateMenuImage(file, menuId));
         }
 
         /// <summary>
