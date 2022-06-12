@@ -76,6 +76,7 @@ namespace FoodManager.Persistence.Contexts
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         private async Task DispatchEvents()
         {

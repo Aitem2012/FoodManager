@@ -4,6 +4,7 @@ using FoodManager.Application.Interfaces.Repositories;
 using FoodManager.Common.Extensions;
 using FoodManager.Common.Response;
 using FoodManager.Services.Abstracts;
+using Microsoft.AspNetCore.Http;
 
 namespace FoodManager.Services.Implementations
 {
@@ -13,21 +14,24 @@ namespace FoodManager.Services.Implementations
         private readonly IAddressService _addressService;
         private readonly IMapper _mapper;
         private readonly ISmsService _smsService;
+        private readonly IFileUploadService _uploadService;
 
-        public UserService(IUserRepository userRespository, IAddressService addressService, IMapper mapper, ISmsService smsService)
+        public UserService(IUserRepository userRespository, IAddressService addressService, IMapper mapper, ISmsService smsService, IFileUploadService uploadService)
         {
             _userRespository = userRespository;
             _addressService = addressService;
             _mapper = mapper;
             _smsService = smsService;
+            _uploadService = uploadService;
         }
 
-        public async Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model, CancellationToken cancellationToken, string role)
+        public async Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model, IFormFile file, CancellationToken cancellationToken, string role)
         {
             model.PhoneNumber = model.PhoneNumber.ConvertToPhoneNumber();
+            var upload = _uploadService.UploadAvatar(file);
             //TODO: send sms
             //await _smsService.SendSmsAsync(model.PhoneNumber);
-            return await _userRespository.CreateUser(model, cancellationToken, role);
+            return await _userRespository.CreateUser(model, upload.AvatarUrl, cancellationToken, role);
         }
 
         public async Task<BaseResponse<GetUserResponseObjectDto>> GetUserByEmail(string email)
