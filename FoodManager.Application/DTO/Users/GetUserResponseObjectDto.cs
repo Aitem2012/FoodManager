@@ -1,6 +1,6 @@
 ﻿namespace FoodManager.Application.DTO.Users
 { 
-    public class GetUserResponseObject
+    public class GetUserResponseObjectDto
     {
         public string Id { get; set; }
         public string FirstName { get; set; }

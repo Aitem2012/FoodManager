@@ -23,12 +23,12 @@ namespace FoodManager.Services.Implementations
             return await _addressRepository.CreateAddress(userAddress, cancellationToken);
         }
 
-        public async Task<BaseResponse<GetAddressResponseObject>> GetAddress(string AppUserId)
+        public async Task<BaseResponse<GetAddressResponseObjectDto>> GetAddress(string AppUserId)
         {
             return await _addressRepository.GetAddress(AppUserId);
         }
 
-        public async Task<BaseResponse<GetAddressResponseObject>> UpdateAddressAsync(UpdateAddressDto address, CancellationToken cancellationToken)
+        public async Task<BaseResponse<GetAddressResponseObjectDto>> UpdateAddressAsync(UpdateAddressDto address, CancellationToken cancellationToken)
         {
             return await _addressRepository.UpdateAddressAsync(address, cancellationToken);
         }

@@ -1,5 +1,8 @@
 ﻿using FoodManager.Application.Behaviors;
+using FoodManager.Application.DTO.FileUpload;
+using FoodManager.Application.DTO.JWT;
 using FoodManager.Application.Implementations.Addresses;
+using FoodManager.Application.Implementations.Menus;
 using FoodManager.Application.Implementations.Users;
 using FoodManager.Application.Interfaces.Persistence;
 using FoodManager.Application.Interfaces.Repositories;
@@ -43,6 +46,9 @@ namespace FoodManager.Persistence.Extensions
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IMenuRepository, MenuRepository>();
+            services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<IFileUploadService, FileUploadService>();
         }
 
         public static void AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
@@ -71,6 +77,11 @@ namespace FoodManager.Persistence.Extensions
         public static void AddMediatorBehavior(this IServiceCollection services)
         {
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        }
+        public static void AddConfiguredService(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<JWTData>(configuration.GetSection(JWTData.Data));
+            services.Configure<CloudinaryConfig>(configuration.GetSection("CloudinaryConfig"));
         }
     }
 }

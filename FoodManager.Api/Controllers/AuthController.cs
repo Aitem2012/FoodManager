@@ -28,18 +28,29 @@ namespace FoodManager.Api.Controllers
         /// <summary>
         /// Register a new user
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost("signup", Name = nameof(Signup)), ProducesResponseType(typeof(GetUserResponseObject), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpPost("signup", Name = nameof(Signup)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> Signup([FromBody] CreateUserDto model)
         {
-            return Ok(await _userService.CreateUser(model, new CancellationToken()));
+            return Ok(await _userService.CreateUser(model, new CancellationToken(), "user"));
+        }
+
+        /// <summary>
+        /// Register a new admin user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("signup-admin", Name = nameof(SignupAdmin)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        public async Task<IActionResult> SignupAdmin([FromBody] CreateUserDto model)
+        {
+            return Ok(await _userService.CreateUser(model, new CancellationToken(), "admin"));
         }
 
         /// <summary>
         /// Register a new user
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("login", Name = nameof(Login)), ProducesResponseType(typeof(UserLoginResponseDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> Login([FromForm] UserLoginDto model)
@@ -50,7 +61,7 @@ namespace FoodManager.Api.Controllers
         /// <summary>
         /// Forgot password
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="email"></param>
         /// <returns></returns>
         [HttpPost("forgotpassword/{email}", Name = nameof(ForgotPassword)), ProducesResponseType(typeof(string), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> ForgotPassword([FromRoute] string email)
@@ -61,7 +72,7 @@ namespace FoodManager.Api.Controllers
         /// <summary>
         /// Forgot password
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("resetpassword", Name = nameof(ResetPassword)), ProducesResponseType(typeof(bool), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> ResetPassword([FromBody] ResetUserPasswordDto model)
@@ -72,7 +83,7 @@ namespace FoodManager.Api.Controllers
         /// <summary>
         /// SignOut
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="email"></param>
         /// <returns></returns>
         [HttpPost("signout/{email}", Name = nameof(Logout)), ProducesResponseType(typeof(bool), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> Logout(string email)

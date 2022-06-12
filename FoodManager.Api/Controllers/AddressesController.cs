@@ -22,7 +22,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost("createaddress",Name = nameof(CreateAddress)), ProducesResponseType(typeof(GetAddressResponseObject), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpPost("createaddress",Name = nameof(CreateAddress)), ProducesResponseType(typeof(GetAddressResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> CreateAddress([FromBody] CreateAddressDto model)
         {
             return Ok(await _addressService.CreateAddress(model, new CancellationToken()));
@@ -33,7 +33,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("updateuseraddress", Name = nameof(UpdateUserAddress)), ProducesResponseType(typeof(GetAddressResponseObject), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpPut("updateuseraddress", Name = nameof(UpdateUserAddress)), ProducesResponseType(typeof(GetAddressResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateUserAddress([FromBody] UpdateAddressDto model)
         {
             return Ok(await _addressService.UpdateAddressAsync(model, new CancellationToken()));
@@ -44,7 +44,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param name="appUserId"></param>
         /// <returns></returns>
-        [HttpGet("{appUserId}", Name = nameof(GetUserAddressByUserId)), ProducesResponseType(typeof(GetAddressResponseObject), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpGet("{appUserId}", Name = nameof(GetUserAddressByUserId)), ProducesResponseType(typeof(GetAddressResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> GetUserAddressByUserId([FromRoute] string appUserId)
         {
             return Ok(await _addressService.GetAddress(appUserId));

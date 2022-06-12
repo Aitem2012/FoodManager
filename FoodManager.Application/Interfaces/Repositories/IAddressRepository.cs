@@ -7,7 +7,7 @@ namespace FoodManager.Application.Interfaces.Repositories
     public interface IAddressRepository
     {
         public Task<int> CreateAddress(Address address, CancellationToken cancellationToken);
-        public Task<BaseResponse<GetAddressResponseObject>> GetAddress(string AppUserId);
-        public Task<BaseResponse<GetAddressResponseObject>> UpdateAddressAsync(UpdateAddressDto address, CancellationToken cancellationToken);
+        public Task<BaseResponse<GetAddressResponseObjectDto>> GetAddress(string AppUserId);
+        public Task<BaseResponse<GetAddressResponseObjectDto>> UpdateAddressAsync(UpdateAddressDto address, CancellationToken cancellationToken);
     }
 }

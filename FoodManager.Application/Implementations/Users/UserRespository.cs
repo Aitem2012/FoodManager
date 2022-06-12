@@ -32,9 +32,9 @@ namespace FoodManager.Application.Implementations.Users
             _logger = logger;
         }
 
-        public async Task<BaseResponse<GetUserResponseObject>> CreateUser(CreateUserDto model, CancellationToken cancellation)
+        public async Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model, CancellationToken cancellation, string role = "")
         {
-            _logger.LogInformation($"Creating User Started => Name: {model.FirstName} {model.LastName} | Email: {model.Email} | PhoneNumber: {model.PhoneNumber} | Role: {model.Role} ");
+            _logger.LogInformation($"Creating User Started => Name: {model.FirstName} {model.LastName} | Email: {model.Email} | PhoneNumber: {model.PhoneNumber} | Role: {role} ");
             var user = _mapper.Map<AppUser>(model);
             if (user == null) throw new NotImplementedException();
 
@@ -51,18 +51,19 @@ namespace FoodManager.Application.Implementations.Users
 
             if (!_userManager.Users.Any(e => e.UserName.Equals(user.UserName)))
             {
-                if (!(await _roleManager.RoleExistsAsync(model.Role)))
+                var userRole = new IdentityResult();
+                if (!string.IsNullOrEmpty(role) && !(await _roleManager.RoleExistsAsync(role)))
                 {
-                    var role = await _roleManager.CreateAsync(new IdentityRole(model.Role));
+                    userRole = await _roleManager.CreateAsync(new IdentityRole(role));
                 }
                 
                 // Creating User and Adding to Role
                 var result = _userManager.CreateAsync(user, model.Password).Result;
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, model.Role);
+                    await _userManager.AddToRoleAsync(user, role);
                     await _userManager.AddClaimsAsync(user, new Claim[]{
-                        new Claim(ClaimTypes.Role, model.Role),
+                        new Claim(ClaimTypes.Role, role),
                         new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
                         new Claim(ClaimTypes.GivenName, user.FirstName),
                         new Claim(ClaimTypes.Surname, user.LastName),
@@ -70,15 +71,15 @@ namespace FoodManager.Application.Implementations.Users
                     });
                 }
 
-                _logger.LogInformation($"User Successfully Created => Name: {model.FirstName} {model.LastName} | Email: {model.Email} | PhoneNumber: {model.PhoneNumber} | Role: {model.Role}");
+                _logger.LogInformation($"User Successfully Created => Name: {model.FirstName} {model.LastName} | Email: {model.Email} | PhoneNumber: {model.PhoneNumber} | Role: {role}");
             }
             else
             {
-                _logger.LogInformation($"User Creation Failed => Name: {model.FirstName} {model.LastName} | Email: {model.Email} | PhoneNumber: {model.PhoneNumber} | Role: {model.Role}");
+                _logger.LogInformation($"User Creation Failed => Name: {model.FirstName} {model.LastName} | Email: {model.Email} | PhoneNumber: {model.PhoneNumber} | Role: {role}");
                 throw new Exception("Username exist exception");
             }
 
-            return new BaseResponse<GetUserResponseObject>().CreateResponse("", true, _mapper.Map<GetUserResponseObject>(user));
+            return new BaseResponse<GetUserResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetUserResponseObjectDto>(user));
         }
 
         public async Task<AppUser> GetUserByEmail(string email)
@@ -113,14 +114,14 @@ namespace FoodManager.Application.Implementations.Users
             return users;
         }
 
-        public async Task<BaseResponse<GetUserResponseObject>> UpdateUser(UpdateUserDto model, CancellationToken cancellation)
+        public async Task<BaseResponse<GetUserResponseObjectDto>> UpdateUser(UpdateUserDto model, CancellationToken cancellation)
         {
             _logger.LogInformation($"User update called for user with Id: {model.Id} at {DateTime.Now}");
             var userInDb = await _context.Users.FirstOrDefaultAsync(x => x.Id.Equals(model.Id), cancellation);
             if (userInDb == null)
             {
                 _logger.LogInformation($"No User with ID: {model.Id}");
-                return new BaseResponse<GetUserResponseObject>().CreateResponse($"No user with Id: {model.Id}", false, null);
+                return new BaseResponse<GetUserResponseObjectDto>().CreateResponse($"No user with Id: {model.Id}", false, null);
             }
             var user = _mapper.Map(model, userInDb);
             user.InviteCode = model.LastName.GenerateRef();
@@ -129,9 +130,9 @@ namespace FoodManager.Application.Implementations.Users
             if (!(await _context.SaveChangesAsync(cancellation)> 0))
             {
                 _logger.LogInformation($"User could not be updated.");
-                return new BaseResponse<GetUserResponseObject>().CreateResponse($"User could not be updated.", false, null);
+                return new BaseResponse<GetUserResponseObjectDto>().CreateResponse($"User could not be updated.", false, null);
             }
-            return new BaseResponse<GetUserResponseObject>().CreateResponse("", true, _mapper.Map<GetUserResponseObject>(user));
+            return new BaseResponse<GetUserResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetUserResponseObjectDto>(user));
         }
     }
 }

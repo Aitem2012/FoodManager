@@ -1,6 +1,6 @@
 ﻿namespace FoodManager.Application.DTO.Addresses
 {
-    public class GetAddressResponseObject
+    public class GetAddressResponseObjectDto
     {
         public Guid Id { get; set; }
         public string AppUserId { get; set; }
