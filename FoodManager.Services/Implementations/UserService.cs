@@ -3,8 +3,11 @@ using FoodManager.Application.DTO.Users;
 using FoodManager.Application.Interfaces.Repositories;
 using FoodManager.Common.Extensions;
 using FoodManager.Common.Response;
+using FoodManager.Domain.Users;
 using FoodManager.Services.Abstracts;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace FoodManager.Services.Implementations
 {
@@ -15,27 +18,38 @@ namespace FoodManager.Services.Implementations
         private readonly IMapper _mapper;
         private readonly ISmsService _smsService;
         private readonly IFileUploadService _uploadService;
-
-        public UserService(IUserRepository userRespository, IAddressService addressService, IMapper mapper, ISmsService smsService, IFileUploadService uploadService)
+        private readonly IHttpContextAccessor _httpContext;
+        private readonly UserManager<AppUser> _userManager;
+        public UserService(IUserRepository userRespository, IAddressService addressService, IMapper mapper, ISmsService smsService, IFileUploadService uploadService, IHttpContextAccessor httpContext, UserManager<AppUser> userManager)
         {
             _userRespository = userRespository;
             _addressService = addressService;
             _mapper = mapper;
             _smsService = smsService;
             _uploadService = uploadService;
+            _httpContext = httpContext;
+            _userManager = userManager;
         }
 
-        public async Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model, IFormFile file, CancellationToken cancellationToken, string role)
+        public async Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model, CancellationToken cancellationToken, string role, IFormFile file = null)
         {
             model.PhoneNumber = model.PhoneNumber.ConvertToPhoneNumber();
-            var upload = _uploadService.UploadAvatar(file);
+            string imageUrl = string.Empty;
+            if (file != null)
+            {
+                imageUrl = _uploadService.UploadAvatar(file).AvatarUrl;
+            }
             //TODO: send sms
             //await _smsService.SendSmsAsync(model.PhoneNumber);
-            return await _userRespository.CreateUser(model, upload.AvatarUrl, cancellationToken, role);
+            return await _userRespository.CreateUser(model, imageUrl, cancellationToken, role);
         }
 
         public async Task<BaseResponse<GetUserResponseObjectDto>> GetUserByEmail(string email)
         {
+            if (!await IsCorrectUserAuthenticated(email:email))
+            {
+                return new BaseResponse<GetUserResponseObjectDto>().CreateResponse("Unauthorized access", false, null); ;
+            }
             var user = await _userRespository.GetUserByEmail(email);
             if (user == null)
             {
@@ -46,6 +60,10 @@ namespace FoodManager.Services.Implementations
 
         public async Task<BaseResponse<GetUserResponseObjectDto>> GetUserById(string id)
         {
+            if (!await IsCorrectUserAuthenticated(id))
+            {
+                return new BaseResponse<GetUserResponseObjectDto>().CreateResponse("Unauthorized access", false, null); ;
+            }
             var user = await _userRespository.GetUserById(id);
             if (user == null)
             {
@@ -56,6 +74,10 @@ namespace FoodManager.Services.Implementations
 
         public async Task<BaseResponse<IEnumerable<GetUserResponseObjectDto>>> GetUsers()
         {
+            if (!await IsCorrectUserAuthenticated())
+            {
+                return new BaseResponse<IEnumerable<GetUserResponseObjectDto>>().CreateResponse("Unauthorized access", false, null); ;
+            }
             var users = await _userRespository.GetUsers();
             if (!users.Any())
             {
@@ -66,7 +88,43 @@ namespace FoodManager.Services.Implementations
 
         public async Task<BaseResponse<GetUserResponseObjectDto>> UpdateUser(UpdateUserDto model, CancellationToken cancellation)
         {
+            if (!await IsCorrectUserAuthenticated(id:model.Id))
+            {
+                return new BaseResponse<GetUserResponseObjectDto>().CreateResponse("Unauthorized to perform this action", false, null);
+            }
             return await _userRespository.UpdateUser(model, cancellation);
+        }
+
+        private async Task<AppUser> GetCurrentUser() => await _userManager.GetUserAsync(_httpContext.HttpContext.User);
+
+        private async Task<bool> IsCorrectUserAuthenticated(string id="", string email="")
+        {
+            var user = await GetCurrentUser();
+            var loggedInUserRole = _httpContext.HttpContext.User.FindFirstValue(ClaimTypes.Role);
+            var userIdIsCorrect = false;
+            var userEmailIsCorrect = false;
+            if (email.StringNotNullOrEmpty())
+            {
+                userEmailIsCorrect = user.Email.Equals(email);
+            }
+            if (id.StringNotNullOrEmpty())
+            {
+                userIdIsCorrect = user.Id.Equals(id);
+            }
+            if (loggedInUserRole.Equals("admin"))
+            {
+                return true;
+            }
+            if (!userIdIsCorrect)
+            {
+                return false;
+            }
+            if (!userEmailIsCorrect)
+            {
+                return false;
+            }
+            
+            return true;
         }
     }
 }

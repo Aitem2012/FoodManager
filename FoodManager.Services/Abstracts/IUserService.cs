@@ -6,7 +6,7 @@ namespace FoodManager.Services.Abstracts
 {
     public interface IUserService
     {
-        Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model,IFormFile file, CancellationToken cancellationToken, string role);
+        Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model, CancellationToken cancellationToken, string role, IFormFile file = null);
         Task<BaseResponse<GetUserResponseObjectDto>> UpdateUser(UpdateUserDto model, CancellationToken cancellation);
         Task<BaseResponse<GetUserResponseObjectDto>> GetUserById(string id);
         Task<BaseResponse<GetUserResponseObjectDto>> GetUserByEmail(string email);

@@ -34,18 +34,19 @@ namespace FoodManager.Api.Controllers
         /// <summary>
         /// creates a new user
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="model"></param>
+        /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost(Name = nameof(CreateUser)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> CreateUser([FromForm] CreateUserDto model, IFormFile file)
         {
-            return Ok(await _userService.CreateUser(model, file, new CancellationToken(), ""));
+            return Ok(await _userService.CreateUser(model, new CancellationToken(), "user", file));
         }
 
         /// <summary>
         /// Update a user
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("updateuser",Name = nameof(UpdateUser)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto model)
