@@ -32,13 +32,13 @@ namespace FoodManager.Application.Implementations.Users
             _logger = logger;
         }
 
-        public async Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model, CancellationToken cancellation, string role = "")
+        public async Task<BaseResponse<GetUserResponseObjectDto>> CreateUser(CreateUserDto model, string imageUrl, CancellationToken cancellation, string role = "")
         {
             _logger.LogInformation($"Creating User Started => Name: {model.FirstName} {model.LastName} | Email: {model.Email} | PhoneNumber: {model.PhoneNumber} | Role: {role} ");
             var user = _mapper.Map<AppUser>(model);
             if (user == null) throw new NotImplementedException();
 
-            
+            user.ImageUrl = imageUrl;
             user.EmailConfirmed = true;
             user.PhoneNumberConfirmed = true;
             user.IsActive = true;

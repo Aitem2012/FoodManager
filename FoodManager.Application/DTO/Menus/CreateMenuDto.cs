@@ -11,5 +11,6 @@ namespace FoodManager.Application.DTO.Menus
         public Size Size { get; set; }
         public string Ingredients { get; set; }
         public string Instruction { get; set; }
+        public Guid CategoryId { get; set; }
     }
 }

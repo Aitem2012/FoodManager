@@ -31,9 +31,9 @@ namespace FoodManager.Api.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("signup", Name = nameof(Signup)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
-        public async Task<IActionResult> Signup([FromBody] CreateUserDto model)
+        public async Task<IActionResult> Signup([FromForm] CreateUserDto model, IFormFile file)
         {
-            return Ok(await _userService.CreateUser(model, new CancellationToken(), "user"));
+            return Ok(await _userService.CreateUser(model, file, new CancellationToken(), "user"));
         }
 
         /// <summary>
@@ -42,9 +42,9 @@ namespace FoodManager.Api.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("signup-admin", Name = nameof(SignupAdmin)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
-        public async Task<IActionResult> SignupAdmin([FromBody] CreateUserDto model)
+        public async Task<IActionResult> SignupAdmin([FromForm] CreateUserDto model, IFormFile file)
         {
-            return Ok(await _userService.CreateUser(model, new CancellationToken(), "admin"));
+            return Ok(await _userService.CreateUser(model, file, new CancellationToken(), "admin"));
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FoodManager.Application.DTO.Addresses;
+using FoodManager.Application.DTO.Categories;
 using FoodManager.Application.DTO.Menus;
 using FoodManager.Application.DTO.Users;
 using FoodManager.Domain.Enums;
@@ -29,6 +30,11 @@ namespace FoodManager.Application.Mapping
             CreateMap<UpdateMenuDto, Menu>();
             CreateMap<Menu, GetMenuResponseObjectDto>()
                 .ForMember(dest => dest.Size, opt => opt.MapFrom(src => (Size)src.Size));
+
+            CreateMap<CreateCategoryDto, Category>();
+            CreateMap<UpdateCategoryDto, Category>();
+            CreateMap<Category, GetCategoryResponseObjectDto>()
+                .ForMember(dest => dest.Menus, opt => opt.MapFrom(src => src.Menus.Count));
         }
     }
 }

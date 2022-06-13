@@ -9,7 +9,7 @@ namespace FoodManager.Api.Controllers
     /// This handles all requests for menus
     /// </summary>
     [Route("[controller]")]
-    [Authorize]
+    //[Authorize]
     public class MenusController : ControllerBase
     {
         private readonly ILogger<MenusController> _logger;
