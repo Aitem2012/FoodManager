@@ -33,7 +33,7 @@ namespace FoodManager.Api.Controllers
         [HttpPost("signup", Name = nameof(Signup)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> Signup([FromForm] CreateUserDto model, IFormFile file)
         {
-            return Ok(await _userService.CreateUser(model, file, new CancellationToken(), "user"));
+            return Ok(await _userService.CreateUser(model, new CancellationToken(), "user", file));
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace FoodManager.Api.Controllers
         [HttpPost("signup-admin", Name = nameof(SignupAdmin)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> SignupAdmin([FromForm] CreateUserDto model, IFormFile file)
         {
-            return Ok(await _userService.CreateUser(model, file, new CancellationToken(), "admin"));
+            return Ok(await _userService.CreateUser(model, new CancellationToken(), "admin", file));
         }
 
         /// <summary>

@@ -2,7 +2,10 @@
 {
     public static class Extension
     {
-
+        public static bool StringNotNullOrEmpty(this string str)
+        {
+            return str.Length > 0;
+        }
         public static string ConvertToPhoneNumber(this string str)
         {
             return $"+234{str.Substring(1)}";
