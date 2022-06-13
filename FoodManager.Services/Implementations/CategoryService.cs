@@ -2,11 +2,6 @@
 using FoodManager.Application.Interfaces.Repositories;
 using FoodManager.Common.Response;
 using FoodManager.Services.Abstracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoodManager.Services.Implementations
 {

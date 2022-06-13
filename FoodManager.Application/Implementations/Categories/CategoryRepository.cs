@@ -2,6 +2,7 @@
 using FoodManager.Application.DTO.Categories;
 using FoodManager.Application.Interfaces.Persistence;
 using FoodManager.Application.Interfaces.Repositories;
+using FoodManager.Common.Extensions;
 using FoodManager.Common.Response;
 using FoodManager.Domain.Menus;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,7 @@ namespace FoodManager.Application.Implementations.Categories
                 return new BaseResponse<GetCategoryResponseObjectDto>().CreateResponse($"Category name : {model.Name} exist already", false, null);
             }
             var category = _mapper.Map<Category>(model);
+            category.Slug = model.Name.Slugify();
             _context.Categories.Add(category);
             await _context.SaveChangesAsync(cancellationToken);
             return new BaseResponse<GetCategoryResponseObjectDto>().CreateResponse("Category created!", true, _mapper.Map<GetCategoryResponseObjectDto>(category));
@@ -62,11 +64,17 @@ namespace FoodManager.Application.Implementations.Categories
         public async Task<BaseResponse<GetCategoryResponseObjectDto>> UpdateCategoryAsync(UpdateCategoryDto model, CancellationToken cancellationToken)
         {
             var categoryIndb = await _context.Categories.SingleOrDefaultAsync(x => x.Id.Equals(model.CategoryId));
+            var categoryNameExist = await _context.Categories.AnyAsync(x => x.Name.Equals(model.Name));
             if (categoryIndb == null)
             {
                 return new BaseResponse<GetCategoryResponseObjectDto>().CreateResponse($"No category with Id: {model.CategoryId}", false, null);
             }
+            if (categoryNameExist)
+            {
+                return new BaseResponse<GetCategoryResponseObjectDto>().CreateResponse($"Category name: {model.Name} exist", false, null);
+            }
             var category = _mapper.Map(model, categoryIndb);
+            category.Slug = model.Name.Slugify();
             _context.Categories.Attach(category);
             await _context.SaveChangesAsync(cancellationToken);
             return new BaseResponse<GetCategoryResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetCategoryResponseObjectDto>(category));

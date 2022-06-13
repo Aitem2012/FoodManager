@@ -2,6 +2,7 @@
 using FoodManager.Application.DTO.FileUpload;
 using FoodManager.Application.DTO.JWT;
 using FoodManager.Application.Implementations.Addresses;
+using FoodManager.Application.Implementations.Categories;
 using FoodManager.Application.Implementations.Menus;
 using FoodManager.Application.Implementations.Users;
 using FoodManager.Application.Interfaces.Persistence;
@@ -49,6 +50,8 @@ namespace FoodManager.Persistence.Extensions
             services.AddScoped<IMenuRepository, MenuRepository>();
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IFileUploadService, FileUploadService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICategoryService, CategoryService>();
         }
 
         public static void AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
