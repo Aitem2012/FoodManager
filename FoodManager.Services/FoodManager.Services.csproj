@@ -9,7 +9,14 @@
 		<Exec Command="echo &quot;App Offline&quot; /a &gt; &quot;$(ProjectDir)app_offline.htm&quot;" />
 	</Target>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="del &quot;$(ProjectDir)app_offline.htm&quot;" />
-	</Target>
+  <ItemGroup>
+    <PackageReference Include="CloudinaryDotNet" Version="1.18.1" />
+    <PackageReference Include="Twilio" Version="5.75.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FoodManager.Application\FoodManager.Application.csproj" />
+    <ProjectReference Include="..\FoodManager.Common\FoodManager.Common.csproj" />
+  </ItemGroup>
+
 </Project>

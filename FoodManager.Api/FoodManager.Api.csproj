@@ -7,13 +7,7 @@
 		<UserSecretsId>fae9106e-cfbc-489a-810e-dd8776ab9e94</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	</PropertyGroup>
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command="echo &quot;App Offline&quot; /a &gt; &quot;$(ProjectDir)app_offline.htm&quot;" />
-	</Target>
-
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="del &quot;$(ProjectDir)app_offline.htm&quot;" />
-	</Target>
+	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4" />
 			<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
@@ -26,10 +20,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\FoodManager.Persistence\FoodManager.Persistence.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Controllers\" />
+		<ProjectReference Include="..\FoodManager.Services\FoodManager.Services.csproj" />
 	</ItemGroup>
 
 </Project>

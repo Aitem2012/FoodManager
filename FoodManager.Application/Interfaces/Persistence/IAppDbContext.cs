@@ -14,6 +14,7 @@ namespace FoodManager.Application.Interfaces.Persistence
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

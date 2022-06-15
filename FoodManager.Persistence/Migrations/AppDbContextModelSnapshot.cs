@@ -22,10 +22,42 @@ namespace FoodManager.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("FoodManager.Domain.Menus.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories", (string)null);
+                });
+
             modelBuilder.Entity("FoodManager.Domain.Menus.Menu", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
@@ -68,6 +100,8 @@ namespace FoodManager.Persistence.Migrations
                         .HasColumnType("decimal(8,3)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("OrderItemId");
 
@@ -236,6 +270,10 @@ namespace FoodManager.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -427,9 +465,17 @@ namespace FoodManager.Persistence.Migrations
 
             modelBuilder.Entity("FoodManager.Domain.Menus.Menu", b =>
                 {
+                    b.HasOne("FoodManager.Domain.Menus.Category", "Category")
+                        .WithMany("Menus")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FoodManager.Domain.Orders.OrderItem", null)
                         .WithMany("Menus")
                         .HasForeignKey("OrderItemId");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("FoodManager.Domain.Orders.Order", b =>
@@ -463,6 +509,11 @@ namespace FoodManager.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FoodManager.Domain.Menus.Category", b =>
+                {
+                    b.Navigation("Menus");
                 });
 
             modelBuilder.Entity("FoodManager.Domain.Orders.OrderItem", b =>
