@@ -75,5 +75,11 @@ namespace FoodManager.Application.Implementations.Orders
             var order = await _context.Orders.Include(x => x.OrderItems).ThenInclude(x => x.Menu).FirstOrDefaultAsync(x => x.TrackingNumber.Equals(trackingNumber));
             return new BaseResponse<GetOrderResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetOrderResponseObjectDto>(order));
         }
+
+        public async Task<BaseResponse<IEnumerable<GetOrderResponseObjectDto>>> GetOrdersByUserIdAsync(string userId)
+        {
+            var orders = await _context.Orders.Include(x => x.OrderItems).ThenInclude(x => x.Menu).Where(x => x.AppUserId.Equals(userId)).ToListAsync();
+            return new BaseResponse<IEnumerable<GetOrderResponseObjectDto>>().CreateResponse("", true, _mapper.Map<IEnumerable<GetOrderResponseObjectDto>>(orders));
+        }
     }
 }

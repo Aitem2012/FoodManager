@@ -9,6 +9,7 @@ namespace FoodManager.Application.Interfaces.Repositories
         public Task<BaseResponse<bool>> AddOrderAsync(CreateOrderDto order);
         public Task<BaseResponse<bool>> DeleteOrderAsync(Guid orderId);
         public Task<BaseResponse<GetOrderResponseObjectDto>> GetOrderByIdAsync(Guid orderId);
+        public Task<BaseResponse<IEnumerable<GetOrderResponseObjectDto>>> GetOrdersByUserIdAsync(string userId);
         public Task<BaseResponse<GetOrderResponseObjectDto>> GetOrderByTrackingNumberAsync(string trackingNumber);
     }
 }

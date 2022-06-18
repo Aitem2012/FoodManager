@@ -10,6 +10,6 @@ namespace FoodManager.Services.Abstracts
         public Task<BaseResponse<bool>> DeleteOrderAsync(Guid orderId);
         public Task<BaseResponse<GetOrderResponseObjectDto>> GetOrderByIdAsync(Guid orderId);
         public Task<BaseResponse<GetOrderResponseObjectDto>> GetOrderByTrackingNumberAsync(string trackingNumber);
-
+        public Task<BaseResponse<IEnumerable<GetOrderResponseObjectDto>>> GetOrdersByUserIdAsync(string userId);
     }
 }

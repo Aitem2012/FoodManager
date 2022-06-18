@@ -51,5 +51,16 @@ namespace FoodManager.Api.Controllers
         {
             return Ok(await _orderService.GetOrderByTrackingNumberAsync(trackingNumber));
         }
+        
+        /// <summary>
+        /// Get an order by trackingNumber
+        /// </summary>
+        /// <param ></param>
+        /// <returns></returns>
+        [HttpGet("/get-orders-for-user/{userId}", Name = nameof(GetOrdersByUserId)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        public async Task<IActionResult> GetOrdersByUserId([FromRoute] string userId)
+        {
+            return Ok(await _orderService.GetOrdersByUserIdAsync(userId));
+        }
     }
 }
