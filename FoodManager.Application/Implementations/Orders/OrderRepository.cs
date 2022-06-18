@@ -5,6 +5,7 @@ using FoodManager.Application.Interfaces.Persistence;
 using FoodManager.Application.Interfaces.Repositories;
 using FoodManager.Common.Extensions;
 using FoodManager.Common.Response;
+using FoodManager.Domain.Enums;
 using FoodManager.Domain.Orders;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,6 +28,10 @@ namespace FoodManager.Application.Implementations.Orders
         {
             var completedOrder = _mapper.Map<Order>(order);
             completedOrder = await CalculateTotal(completedOrder);
+            completedOrder.ConfirmationStatus = ConfirmationStatus.Pending;
+            completedOrder.DeliveryStatus = DeliveryStatus.Pending;
+            completedOrder.PaymentStatus = PaymentStatus.Pending;
+            completedOrder.PaymentMethod = order.PaymentMethod.ToString();
             _context.Orders.Add(completedOrder);
             return new BaseResponse<bool>().CreateResponse("", true, await _context.SaveChangesAsync(new CancellationToken()) > 0);
         }

@@ -11,7 +11,13 @@ namespace FoodManager.Domain.Enums
         [Description("Cancelled")]
         Cancelled
     }
-
+    public enum PaymentMethod
+    {
+        [Description("Pay On Delivery")]
+        PayOnDelivery = 1,
+        [Description("Pay online")]
+        PayOnline
+    }
     public enum ConfirmationStatus
     {
         [Description("Confirmed")]

@@ -2,9 +2,12 @@
 using FoodManager.Application.DTO.Addresses;
 using FoodManager.Application.DTO.Categories;
 using FoodManager.Application.DTO.Menus;
+using FoodManager.Application.DTO.OrderItems;
+using FoodManager.Application.DTO.Orders;
 using FoodManager.Application.DTO.Users;
 using FoodManager.Domain.Enums;
 using FoodManager.Domain.Menus;
+using FoodManager.Domain.Orders;
 using FoodManager.Domain.Users;
 
 namespace FoodManager.Application.Mapping
@@ -35,6 +38,12 @@ namespace FoodManager.Application.Mapping
             CreateMap<UpdateCategoryDto, Category>();
             CreateMap<Category, GetCategoryResponseObjectDto>()
                 .ForMember(dest => dest.Menus, opt => opt.MapFrom(src => src.Menus.Count));
+
+            CreateMap<CreateOrderDto, Order>();
+            CreateMap<Order, GetOrderResponseObjectDto>();
+
+            CreateMap<CreateOrderItemDto, OrderItem>();
+            CreateMap<OrderItem, GetOrderItemResponseObjectDto>();
         }
     }
 }
