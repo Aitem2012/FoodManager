@@ -14,6 +14,7 @@ namespace FoodManager.Domain.Orders
         public decimal PaymentAmount { get; set; }
         public ConfirmationStatus ConfirmationStatus { get; set; }
         public DeliveryStatus DeliveryStatus { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
 
     }
 }

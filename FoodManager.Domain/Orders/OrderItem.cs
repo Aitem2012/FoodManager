@@ -9,6 +9,7 @@ namespace FoodManager.Domain.Orders
         public int Quantity { get; set; }
         public Guid OrderId { get; set; }
         public Order Order { get; set; }
-        public ICollection<Menu> Menus { get; set; }
+        public Guid MenuId { get; set; }
+        public Menu Menu { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using FoodManager.Application.DTO.FileUpload;
 using FoodManager.Application.DTO.Menus;
 using FoodManager.Application.Interfaces.Repositories;
+using FoodManager.Common.Extensions;
 using FoodManager.Common.Response;
 using FoodManager.Services.Abstracts;
 using Microsoft.AspNetCore.Http;
@@ -21,10 +22,15 @@ namespace FoodManager.Services.Implementations
             _uploadService = uploadService;
         }
 
-        public async Task<BaseResponse<GetMenuResponseObjectDto>> CreateMenuAsync(CreateMenuDto menu, IFormFile file)
+        public async Task<BaseResponse<GetMenuResponseObjectDto>> CreateMenuAsync(CreateMenuDto menu, IFormFile file=null)
         {
-            var imageUrl = UploadMenuImage(file);
-            return await _menuRepository.CreateMenuAsync(menu, imageUrl.Data.AvatarUrl, new CancellationToken());
+            var imageUrl = string.Empty;
+            if (!file.IsNullOrEmpty())
+            {
+                imageUrl = UploadMenuImage(file).Data.AvatarUrl;
+
+            }
+            return await _menuRepository.CreateMenuAsync(menu, imageUrl, new CancellationToken());
         }
 
         public async Task<BaseResponse<bool>> DeleteMenuAsync(Guid menuId)

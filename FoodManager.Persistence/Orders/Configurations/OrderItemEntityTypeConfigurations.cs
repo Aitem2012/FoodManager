@@ -11,7 +11,7 @@ namespace FoodManager.Persistence.Orders.Configurations
         {
             builder.ToTable("OrderItems");
             builder.HasKey(x => x.Id);
-            builder.HasMany(x => x.Menus);
+            builder.HasOne(x => x.Menu);
             builder.Property(x => x.Price).HasPrecision(8, 3);
         }
     }

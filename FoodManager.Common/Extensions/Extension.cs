@@ -11,6 +11,10 @@
             return $"+234{str.Substring(1)}";
         }
 
+        public static bool IsNullOrEmpty<T>(this T obj)
+        {
+            return obj == null;
+        }
         /// <summary>
         /// Generates a Slug text from a string
         /// </summary>

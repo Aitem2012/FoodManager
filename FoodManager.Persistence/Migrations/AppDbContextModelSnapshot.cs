@@ -89,9 +89,6 @@ namespace FoodManager.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("OrderItemId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Size")
                         .HasColumnType("int");
 
@@ -102,8 +99,6 @@ namespace FoodManager.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("OrderItemId");
 
                     b.ToTable("Menus", (string)null);
                 });
@@ -164,6 +159,9 @@ namespace FoodManager.Persistence.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("MenuId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
@@ -175,6 +173,8 @@ namespace FoodManager.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MenuId");
 
                     b.HasIndex("OrderId");
 
@@ -471,10 +471,6 @@ namespace FoodManager.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FoodManager.Domain.Orders.OrderItem", null)
-                        .WithMany("Menus")
-                        .HasForeignKey("OrderItemId");
-
                     b.Navigation("Category");
                 });
 
@@ -491,11 +487,19 @@ namespace FoodManager.Persistence.Migrations
 
             modelBuilder.Entity("FoodManager.Domain.Orders.OrderItem", b =>
                 {
-                    b.HasOne("FoodManager.Domain.Orders.Order", "Order")
+                    b.HasOne("FoodManager.Domain.Menus.Menu", "Menu")
                         .WithMany()
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FoodManager.Domain.Orders.Order", "Order")
+                        .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Menu");
 
                     b.Navigation("Order");
                 });
@@ -516,9 +520,9 @@ namespace FoodManager.Persistence.Migrations
                     b.Navigation("Menus");
                 });
 
-            modelBuilder.Entity("FoodManager.Domain.Orders.OrderItem", b =>
+            modelBuilder.Entity("FoodManager.Domain.Orders.Order", b =>
                 {
-                    b.Navigation("Menus");
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("FoodManager.Domain.Users.AppUser", b =>
