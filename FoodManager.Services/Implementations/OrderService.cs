@@ -30,5 +30,10 @@ namespace FoodManager.Services.Implementations
         {
             return await _orderRepository.GetOrderByIdAsync(orderId);
         }
+
+        public async Task<BaseResponse<GetOrderResponseObjectDto>> GetOrderByTrackingNumberAsync(string trackingNumber)
+        {
+            return await _orderRepository.GetOrderByTrackingNumberAsync(trackingNumber);
+        }
     }
 }

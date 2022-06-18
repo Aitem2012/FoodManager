@@ -35,10 +35,21 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param ></param>
         /// <returns></returns>
-        [HttpGet("{orderId}", Name = nameof(GetOrderById)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpGet("/{orderId}", Name = nameof(GetOrderById)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> GetOrderById([FromRoute] Guid orderId)
         {
             return Ok(await _orderService.GetOrderByIdAsync(orderId));
+        }
+        
+        /// <summary>
+        /// Get an order by trackingNumber
+        /// </summary>
+        /// <param ></param>
+        /// <returns></returns>
+        [HttpGet("{trackingNumber}", Name = nameof(GetOrderByTrackingNumber)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        public async Task<IActionResult> GetOrderByTrackingNumber([FromRoute] string trackingNumber)
+        {
+            return Ok(await _orderService.GetOrderByTrackingNumberAsync(trackingNumber));
         }
     }
 }
