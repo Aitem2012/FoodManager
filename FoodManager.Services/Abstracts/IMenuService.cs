@@ -7,7 +7,7 @@ namespace FoodManager.Services.Abstracts
 {
     public interface IMenuService
     {
-        public Task<BaseResponse<GetMenuResponseObjectDto>> CreateMenuAsync(CreateMenuDto menu, IFormFile file);
+        public Task<BaseResponse<GetMenuResponseObjectDto>> CreateMenuAsync(CreateMenuDto menu, IFormFile file = null);
         public Task<BaseResponse<GetMenuResponseObjectDto>> UpdateMenuAsync(UpdateMenuDto menu);
         public Task<BaseResponse<bool>> DeleteMenuAsync(Guid menuId);
         public Task<BaseResponse<GetMenuResponseObjectDto>> GetMenuByIdAsync(Guid menuId);
