@@ -20,7 +20,7 @@ namespace FoodManager.Api.Controllers
         }
 
         /// <summary>
-        /// Get all menus
+        /// Create an order
         /// </summary>
         /// <param ></param>
         /// <returns></returns>
@@ -28,6 +28,17 @@ namespace FoodManager.Api.Controllers
         public async Task<IActionResult> AddOrder([FromBody]CreateOrderDto order)
         {
             return Ok(await _orderService.AddOrderAsync(order));
+        }
+
+        /// <summary>
+        /// Get an order by Id
+        /// </summary>
+        /// <param ></param>
+        /// <returns></returns>
+        [HttpGet("{orderId}", Name = nameof(GetOrderById)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        public async Task<IActionResult> GetOrderById([FromRoute] Guid orderId)
+        {
+            return Ok(await _orderService.GetOrderByIdAsync(orderId));
         }
     }
 }

@@ -66,7 +66,7 @@ namespace FoodManager.Application.Implementations.Orders
 
         public async Task<BaseResponse<GetOrderResponseObjectDto>> GetOrderByIdAsync(Guid orderId)
         {
-            var order = await _context.Orders.SingleOrDefaultAsync(x => x.Id.Equals(orderId));
+            var order = await _context.Orders.Include(x => x.OrderItems).ThenInclude(x => x.Menu).FirstOrDefaultAsync(x => x.Id.Equals(orderId));
             return new BaseResponse<GetOrderResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetOrderResponseObjectDto>(order));
         }
     }
