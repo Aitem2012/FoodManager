@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FoodManager.Application.DTO.OrderItems;
 using FoodManager.Application.DTO.Orders;
 using FoodManager.Application.Interfaces.Persistence;
 using FoodManager.Application.Interfaces.Repositories;
@@ -48,22 +47,22 @@ namespace FoodManager.Application.Implementations.Orders
         }
 
 
-        public async Task<BaseResponse<GetOrderResponseObjectDto>> GetOrderByIdAsync(Guid orderId)
+        public async Task<BaseResponse<Order>> GetOrderByIdAsync(Guid orderId)
         {
             var order = await _context.Orders.Include(x => x.OrderItems).ThenInclude(x => x.Menu).FirstOrDefaultAsync(x => x.Id.Equals(orderId));
-            return new BaseResponse<GetOrderResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetOrderResponseObjectDto>(order));
+            return new BaseResponse<Order>().CreateResponse("", true, order);
         }
 
-        public async Task<BaseResponse<GetOrderResponseObjectDto>> GetOrderByTrackingNumberAsync(string trackingNumber)
+        public async Task<BaseResponse<Order>> GetOrderByTrackingNumberAsync(string trackingNumber)
         {
             var order = await _context.Orders.Include(x => x.OrderItems).ThenInclude(x => x.Menu).FirstOrDefaultAsync(x => x.TrackingNumber.Equals(trackingNumber));
-            return new BaseResponse<GetOrderResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetOrderResponseObjectDto>(order));
+            return new BaseResponse<Order>().CreateResponse("", true, order);
         }
 
-        public async Task<BaseResponse<IEnumerable<GetOrderResponseObjectDto>>> GetOrdersByUserIdAsync(string userId)
+        public async Task<BaseResponse<IEnumerable<Order>>> GetOrdersByUserIdAsync(string userId)
         {
             var orders = await _context.Orders.Include(x => x.OrderItems).ThenInclude(x => x.Menu).Where(x => x.AppUserId.Equals(userId)).ToListAsync();
-            return new BaseResponse<IEnumerable<GetOrderResponseObjectDto>>().CreateResponse("", true, _mapper.Map<IEnumerable<GetOrderResponseObjectDto>>(orders));
+            return new BaseResponse<IEnumerable<Order>>().CreateResponse("", true, orders);
         }
         private async Task<Order> CalculateTotal(Order order)
         {
@@ -82,11 +81,11 @@ namespace FoodManager.Application.Implementations.Orders
             return order;
         }
 
-        public async Task<BaseResponse<IEnumerable<GetOrderResponseObjectDto>>> GetOrdersForAdminAsync()
+        public async Task<BaseResponse<IEnumerable<Order>>> GetOrdersForAdminAsync()
         {
             var orders = await _context.Orders.Include(x => x.OrderItems).ThenInclude(x => x.Menu).ToListAsync();
-            return new BaseResponse<IEnumerable<GetOrderResponseObjectDto>>().CreateResponse($"Retrieved: {orders.Count} successfully",
-                true, _mapper.Map<IEnumerable<GetOrderResponseObjectDto>>(orders));
+            return new BaseResponse<IEnumerable<Order>>().CreateResponse($"Retrieved: {orders.Count} successfully",
+                true, orders);
         }
     }
 }
