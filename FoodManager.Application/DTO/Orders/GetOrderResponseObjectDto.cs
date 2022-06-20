@@ -12,6 +12,5 @@ namespace FoodManager.Application.DTO.Orders
         public decimal PaymentAmount { get; set; }
         public string ConfirmationStatus { get; set; }
         public string DeliveryStatus { get; set; }
-        public ICollection<GetOrderItemResponseObjectDto> OrderItems { get; set; }
     }
 }

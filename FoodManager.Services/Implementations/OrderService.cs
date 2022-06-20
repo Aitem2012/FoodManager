@@ -3,6 +3,7 @@ using FoodManager.Application.DTO.OrderItems;
 using FoodManager.Application.DTO.Orders;
 using FoodManager.Application.Interfaces.Repositories;
 using FoodManager.Common.Response;
+using FoodManager.Domain.Orders;
 using FoodManager.Services.Abstracts;
 
 namespace FoodManager.Services.Implementations
@@ -32,28 +33,37 @@ namespace FoodManager.Services.Implementations
 
         public async Task<BaseResponse<GetOrderResponseObjectDto>> GetOrderByIdAsync(Guid orderId)
         {
-            return await _orderRepository.GetOrderByIdAsync(orderId);
+            var order = await _orderRepository.GetOrderByIdAsync(orderId);
+            return new BaseResponse<GetOrderResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetOrderResponseObjectDto>(order.Data));
         }
 
         public async Task<BaseResponse<GetOrderResponseObjectDto>> GetOrderByTrackingNumberAsync(string trackingNumber)
         {
-            return await _orderRepository.GetOrderByTrackingNumberAsync(trackingNumber);
+            var order = await _orderRepository.GetOrderByTrackingNumberAsync(trackingNumber);
+            return new BaseResponse<GetOrderResponseObjectDto>().CreateResponse("", true, _mapper.Map<GetOrderResponseObjectDto>(order.Data));
         }
 
         public async Task<BaseResponse<IEnumerable<GetOrderResponseObjectDto>>> GetOrdersByUserIdAsync(string userId)
         {
-            return await _orderRepository.GetOrdersByUserIdAsync(userId); 
+            var orders = await _orderRepository.GetOrdersByUserIdAsync(userId);
+            return new BaseResponse<IEnumerable<GetOrderResponseObjectDto>>().CreateResponse("", true, _mapper.Map<IEnumerable<GetOrderResponseObjectDto>>(orders.Data));
         }
 
         public async Task<BaseResponse<IEnumerable<GetOrderResponseObjectDto>>> GetOrdersForAdminAsync()
         {
-            return await _orderRepository.GetOrdersForAdminAsync();
+            var orders = await _orderRepository.GetOrdersForAdminAsync();
+            return new BaseResponse<IEnumerable<GetOrderResponseObjectDto>>().CreateResponse("", true, _mapper.Map<IEnumerable<GetOrderResponseObjectDto>>(orders.Data));
         }
 
         public async Task<BaseResponse<IEnumerable<GetOrderItemResponseObjectDto>>> GetOrderDetailsAsync(Guid orderId)
         {
-            var orderDetails = GetOrderByIdAsync(orderId).Result.Data.OrderItems;
+            var orderDetails = GetOrderById(orderId).Result.Data.OrderItems;
             return new BaseResponse<IEnumerable<GetOrderItemResponseObjectDto>>().CreateResponse("", true, _mapper.Map<IEnumerable<GetOrderItemResponseObjectDto>>(orderDetails));
+        }
+
+        private async Task<BaseResponse<Order>> GetOrderById(Guid Id)
+        {
+            return await _orderRepository.GetOrderByIdAsync(Id);
         }
     }
 }
