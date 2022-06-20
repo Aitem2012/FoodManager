@@ -44,6 +44,7 @@ namespace FoodManager.Application.Mapping
 
             CreateMap<CreateOrderItemDto, OrderItem>();
             CreateMap<OrderItem, GetOrderItemResponseObjectDto>();
+            CreateMap<GetOrderResponseObjectDto, GetOrderItemResponseObjectDto>();
         }
     }
 }

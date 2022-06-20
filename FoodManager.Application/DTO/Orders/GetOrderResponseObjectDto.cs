@@ -4,6 +4,7 @@ namespace FoodManager.Application.DTO.Orders
 {
     public class GetOrderResponseObjectDto
     {
+        public Guid Id { get; set; }
         public string AppUserId { get; set; }
         public string TrackingNumber { get; set; }
         public string PaymentMethod { get; set; }

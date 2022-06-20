@@ -1,4 +1,5 @@
-﻿using FoodManager.Application.DTO.Orders;
+﻿using FoodManager.Application.DTO.OrderItems;
+using FoodManager.Application.DTO.Orders;
 using FoodManager.Common.Response;
 using FoodManager.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
@@ -64,7 +65,7 @@ namespace FoodManager.Api.Controllers
         }
 
         /// <summary>
-        /// Get an order by trackingNumber
+        /// Get orders for admin
         /// </summary>
         /// <param ></param>
         /// <returns></returns>
@@ -72,6 +73,17 @@ namespace FoodManager.Api.Controllers
         public async Task<IActionResult> GetOrdersByAdmin()
         {
             return Ok(await _orderService.GetOrdersForAdminAsync());
+        }
+
+        /// <summary>
+        /// Get an order detail by orderid
+        /// </summary>
+        /// <param ></param>
+        /// <returns></returns>
+        [HttpGet("/get-orders-details", Name = nameof(GetOrderDetail)), ProducesResponseType(typeof(BaseResponse<IEnumerable<GetOrderItemResponseObjectDto>>), StatusCodes.Status200OK), ProducesDefaultResponseType]
+        public async Task<IActionResult> GetOrderDetail(Guid orderId)
+        {
+            return Ok(await _orderService.GetOrderDetailsAsync(orderId));
         }
     }
 }
