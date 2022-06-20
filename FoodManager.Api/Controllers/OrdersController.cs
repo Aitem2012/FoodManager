@@ -35,7 +35,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param ></param>
         /// <returns></returns>
-        [HttpGet("/{orderId}", Name = nameof(GetOrderById)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpGet("/{orderId}", Name = nameof(GetOrderById)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status200OK), ProducesDefaultResponseType]
         public async Task<IActionResult> GetOrderById([FromRoute] Guid orderId)
         {
             return Ok(await _orderService.GetOrderByIdAsync(orderId));
@@ -46,7 +46,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param ></param>
         /// <returns></returns>
-        [HttpGet("{trackingNumber}", Name = nameof(GetOrderByTrackingNumber)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpGet("{trackingNumber}", Name = nameof(GetOrderByTrackingNumber)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status200OK), ProducesDefaultResponseType]
         public async Task<IActionResult> GetOrderByTrackingNumber([FromRoute] string trackingNumber)
         {
             return Ok(await _orderService.GetOrderByTrackingNumberAsync(trackingNumber));
@@ -57,7 +57,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param ></param>
         /// <returns></returns>
-        [HttpGet("/get-orders-for-user/{userId}", Name = nameof(GetOrdersByUserId)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpGet("/get-orders-for-user/{userId}", Name = nameof(GetOrdersByUserId)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status200OK), ProducesDefaultResponseType]
         public async Task<IActionResult> GetOrdersByUserId([FromRoute] string userId)
         {
             return Ok(await _orderService.GetOrdersByUserIdAsync(userId));
