@@ -81,5 +81,12 @@ namespace FoodManager.Application.Implementations.Orders
             order.TrackingNumber = string.Format("{0:yyMMddhhmmss}", DateTime.Now) + rand.Next(1000, 9999).ToString();
             return order;
         }
+
+        public async Task<BaseResponse<IEnumerable<GetOrderResponseObjectDto>>> GetOrdersForAdminAsync()
+        {
+            var orders = await _context.Orders.Include(x => x.OrderItems).ThenInclude(x => x.Menu).ToListAsync();
+            return new BaseResponse<IEnumerable<GetOrderResponseObjectDto>>().CreateResponse($"Retrieved: {orders.Count} successfully",
+                true, _mapper.Map<IEnumerable<GetOrderResponseObjectDto>>(orders));
+        }
     }
 }

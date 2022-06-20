@@ -11,5 +11,6 @@ namespace FoodManager.Application.Interfaces.Repositories
         public Task<BaseResponse<GetOrderResponseObjectDto>> GetOrderByIdAsync(Guid orderId);
         public Task<BaseResponse<IEnumerable<GetOrderResponseObjectDto>>> GetOrdersByUserIdAsync(string userId);
         public Task<BaseResponse<GetOrderResponseObjectDto>> GetOrderByTrackingNumberAsync(string trackingNumber);
+        public Task<BaseResponse<IEnumerable<GetOrderResponseObjectDto>>> GetOrdersForAdminAsync();
     }
 }

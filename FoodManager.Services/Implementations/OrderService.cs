@@ -40,5 +40,10 @@ namespace FoodManager.Services.Implementations
         {
             return await _orderRepository.GetOrdersByUserIdAsync(userId); 
         }
+
+        public async Task<BaseResponse<IEnumerable<GetOrderResponseObjectDto>>> GetOrdersForAdminAsync()
+        {
+            return await _orderRepository.GetOrdersForAdminAsync();
+        }
     }
 }

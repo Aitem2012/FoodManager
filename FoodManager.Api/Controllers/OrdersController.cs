@@ -57,10 +57,21 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param ></param>
         /// <returns></returns>
-        [HttpGet("/get-orders-for-user/{userId}", Name = nameof(GetOrdersByUserId)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status200OK), ProducesDefaultResponseType]
+        [HttpGet("/get-orders-for-user/{userId}", Name = nameof(GetOrdersByUserId)), ProducesResponseType(typeof(BaseResponse<IEnumerable<GetOrderResponseObjectDto>>), StatusCodes.Status200OK), ProducesDefaultResponseType]
         public async Task<IActionResult> GetOrdersByUserId([FromRoute] string userId)
         {
             return Ok(await _orderService.GetOrdersByUserIdAsync(userId));
+        }
+
+        /// <summary>
+        /// Get an order by trackingNumber
+        /// </summary>
+        /// <param ></param>
+        /// <returns></returns>
+        [HttpGet("/get-orders-for-admin", Name = nameof(GetOrdersByAdmin)), ProducesResponseType(typeof(BaseResponse<IEnumerable<GetOrderResponseObjectDto>>), StatusCodes.Status200OK), ProducesDefaultResponseType]
+        public async Task<IActionResult> GetOrdersByAdmin()
+        {
+            return Ok(await _orderService.GetOrdersForAdminAsync());
         }
     }
 }
