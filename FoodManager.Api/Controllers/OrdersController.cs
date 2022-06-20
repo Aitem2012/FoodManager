@@ -1,4 +1,5 @@
-﻿using FoodManager.Application.DTO.Orders;
+﻿using FoodManager.Application.DTO.OrderItems;
+using FoodManager.Application.DTO.Orders;
 using FoodManager.Common.Response;
 using FoodManager.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +36,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param ></param>
         /// <returns></returns>
-        [HttpGet("/{orderId}", Name = nameof(GetOrderById)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpGet("/{orderId}", Name = nameof(GetOrderById)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status200OK), ProducesDefaultResponseType]
         public async Task<IActionResult> GetOrderById([FromRoute] Guid orderId)
         {
             return Ok(await _orderService.GetOrderByIdAsync(orderId));
@@ -46,7 +47,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param ></param>
         /// <returns></returns>
-        [HttpGet("{trackingNumber}", Name = nameof(GetOrderByTrackingNumber)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpGet("{trackingNumber}", Name = nameof(GetOrderByTrackingNumber)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status200OK), ProducesDefaultResponseType]
         public async Task<IActionResult> GetOrderByTrackingNumber([FromRoute] string trackingNumber)
         {
             return Ok(await _orderService.GetOrderByTrackingNumberAsync(trackingNumber));
@@ -57,10 +58,32 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param ></param>
         /// <returns></returns>
-        [HttpGet("/get-orders-for-user/{userId}", Name = nameof(GetOrdersByUserId)), ProducesResponseType(typeof(BaseResponse<GetOrderResponseObjectDto>), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpGet("/get-orders-for-user/{userId}", Name = nameof(GetOrdersByUserId)), ProducesResponseType(typeof(BaseResponse<IEnumerable<GetOrderResponseObjectDto>>), StatusCodes.Status200OK), ProducesDefaultResponseType]
         public async Task<IActionResult> GetOrdersByUserId([FromRoute] string userId)
         {
             return Ok(await _orderService.GetOrdersByUserIdAsync(userId));
+        }
+
+        /// <summary>
+        /// Get orders for admin
+        /// </summary>
+        /// <param ></param>
+        /// <returns></returns>
+        [HttpGet("/get-orders-for-admin", Name = nameof(GetOrdersByAdmin)), ProducesResponseType(typeof(BaseResponse<IEnumerable<GetOrderResponseObjectDto>>), StatusCodes.Status200OK), ProducesDefaultResponseType]
+        public async Task<IActionResult> GetOrdersByAdmin()
+        {
+            return Ok(await _orderService.GetOrdersForAdminAsync());
+        }
+
+        /// <summary>
+        /// Get an order detail by orderid
+        /// </summary>
+        /// <param ></param>
+        /// <returns></returns>
+        [HttpGet("/get-orders-details", Name = nameof(GetOrderDetail)), ProducesResponseType(typeof(BaseResponse<IEnumerable<GetOrderItemResponseObjectDto>>), StatusCodes.Status200OK), ProducesDefaultResponseType]
+        public async Task<IActionResult> GetOrderDetail(Guid orderId)
+        {
+            return Ok(await _orderService.GetOrderDetailsAsync(orderId));
         }
     }
 }

@@ -8,7 +8,18 @@
         }
         public static string ConvertToPhoneNumber(this string str)
         {
-            return $"+234{str.Substring(1)}";
+            if (str.StartsWith("+234") && str.Length == 14)
+            {
+                return str;
+            }
+            else if (str.StartsWith('0') && str.Length == 11)
+            {
+                return $"+234{str.Substring(1)}";
+            }
+            else
+            {
+                return "";
+            }
         }
 
         public static bool IsNullOrEmpty<T>(this T obj)

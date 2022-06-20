@@ -1,4 +1,6 @@
-﻿using FoodManager.Application.DTO.Orders;
+﻿using AutoMapper;
+using FoodManager.Application.DTO.OrderItems;
+using FoodManager.Application.DTO.Orders;
 using FoodManager.Application.Interfaces.Repositories;
 using FoodManager.Common.Response;
 using FoodManager.Services.Abstracts;
@@ -9,10 +11,12 @@ namespace FoodManager.Services.Implementations
     {
         public int OrderCount { get;set; }
         private readonly IOrderRepository _orderRepository;
+        private readonly IMapper _mapper;
 
-        public OrderService(IOrderRepository orderRepository)
+        public OrderService(IOrderRepository orderRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
+            _mapper = mapper;
         }
 
 
@@ -38,7 +42,18 @@ namespace FoodManager.Services.Implementations
 
         public async Task<BaseResponse<IEnumerable<GetOrderResponseObjectDto>>> GetOrdersByUserIdAsync(string userId)
         {
-            return await _orderRepository.GetOrdersByUserIdAsync(userId);
+            return await _orderRepository.GetOrdersByUserIdAsync(userId); 
+        }
+
+        public async Task<BaseResponse<IEnumerable<GetOrderResponseObjectDto>>> GetOrdersForAdminAsync()
+        {
+            return await _orderRepository.GetOrdersForAdminAsync();
+        }
+
+        public async Task<BaseResponse<IEnumerable<GetOrderItemResponseObjectDto>>> GetOrderDetailsAsync(Guid orderId)
+        {
+            var orderDetails = GetOrderByIdAsync(orderId).Result.Data.OrderItems;
+            return new BaseResponse<IEnumerable<GetOrderItemResponseObjectDto>>().CreateResponse("", true, _mapper.Map<IEnumerable<GetOrderItemResponseObjectDto>>(orderDetails));
         }
     }
 }

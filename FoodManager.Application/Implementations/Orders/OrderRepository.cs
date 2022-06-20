@@ -47,22 +47,6 @@ namespace FoodManager.Application.Implementations.Orders
             return new BaseResponse<bool>().CreateResponse("", true, await _context.SaveChangesAsync(new CancellationToken()) > 0);
         }
 
-        private async Task<Order> CalculateTotal(Order order)
-        {
-            Random rand = new Random(Guid.NewGuid().GetHashCode());
-            var items = order.OrderItems.ToDictionary(x => x.MenuId, x => x.Quantity);
-            var menus = await _context.Menus.Where(x => items.Keys.Contains(x.Id))
-                                            .Select(x => new { SellingPrice = x.UnitPrice, Id = x.Id })
-                                            .ToListAsync();
-            foreach (var item in menus)
-            {
-                order.PaymentAmount += item.SellingPrice * items[item.Id];
-            }
-            //Todo: Calculate delivery cost
-            order.User = await _context.Users.FindAsync(order.AppUserId);
-            order.TrackingNumber = string.Format("{0:yyMMddhhmmss}", DateTime.Now) + rand.Next(1000, 9999).ToString();
-            return order;
-        }
 
         public async Task<BaseResponse<GetOrderResponseObjectDto>> GetOrderByIdAsync(Guid orderId)
         {
@@ -80,6 +64,29 @@ namespace FoodManager.Application.Implementations.Orders
         {
             var orders = await _context.Orders.Include(x => x.OrderItems).ThenInclude(x => x.Menu).Where(x => x.AppUserId.Equals(userId)).ToListAsync();
             return new BaseResponse<IEnumerable<GetOrderResponseObjectDto>>().CreateResponse("", true, _mapper.Map<IEnumerable<GetOrderResponseObjectDto>>(orders));
+        }
+        private async Task<Order> CalculateTotal(Order order)
+        {
+            Random rand = new Random(Guid.NewGuid().GetHashCode());
+            var items = order.OrderItems.ToDictionary(x => x.MenuId, x => x.Quantity);
+            var menus = await _context.Menus.Where(x => items.Keys.Contains(x.Id))
+                                            .Select(x => new { SellingPrice = x.UnitPrice, Id = x.Id })
+                                            .ToListAsync();
+            foreach (var item in menus)
+            {
+                order.PaymentAmount += item.SellingPrice * items[item.Id];
+            }
+            //Todo: Calculate delivery cost
+            order.User = await _context.Users.FindAsync(order.AppUserId);
+            order.TrackingNumber = string.Format("{0:yyMMddhhmmss}", DateTime.Now) + rand.Next(1000, 9999).ToString();
+            return order;
+        }
+
+        public async Task<BaseResponse<IEnumerable<GetOrderResponseObjectDto>>> GetOrdersForAdminAsync()
+        {
+            var orders = await _context.Orders.Include(x => x.OrderItems).ThenInclude(x => x.Menu).ToListAsync();
+            return new BaseResponse<IEnumerable<GetOrderResponseObjectDto>>().CreateResponse($"Retrieved: {orders.Count} successfully",
+                true, _mapper.Map<IEnumerable<GetOrderResponseObjectDto>>(orders));
         }
     }
 }
