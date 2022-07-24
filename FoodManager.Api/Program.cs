@@ -1,34 +1,36 @@
 using FluentValidation.AspNetCore;
-using FoodManager.Application.DTO.JWT;
-using FoodManager.Application.DTO.Users;
 using FoodManager.Application.Mapping;
 using FoodManager.Application.Validators;
 using FoodManager.Persistence.Extensions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-var config =builder.Configuration;
+var config = builder.Configuration;
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-builder.Services.AddAutoMapper(typeof(FoodManagerMapping));
+
+builder.Services.AddDatabaseServices(config);
+builder.Services.AddApplicationServices(config);
+builder.Services.AddConfiguredService(config);
+builder.Services.AddAuthenticationServices(config);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddControllers().SetCompatibilityVersion(CompatibilityVersion.Latest)
+//builder.Services.AddMediatR(typeof(CreateUserDto).Assembly);
+builder.Services.AddControllers()
     .AddFluentValidation(opt =>
     {
-        opt.RegisterValidatorsFromAssembly(typeof(CreateUserDtoValidator).GetTypeInfo()
-            .Assembly);
+        opt.RegisterValidatorsFromAssembly(typeof(CreateUserDtoValidator).GetTypeInfo().Assembly);
     });
 
+builder.Services.AddAutoMapper(typeof(FoodManagerMapping));
 builder.Services.AddEndpointsApiExplorer();
 
 
-builder.Services.AddSwaggerGen(c => {
+builder.Services.AddSwaggerGen(c =>
+{
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
@@ -71,10 +73,6 @@ builder.Services.AddSwaggerGen(c => {
     //c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
 });
 
-builder.Services.AddDatabaseServices(config);
-builder.Services.AddApplicationServices(config);
-builder.Services.AddConfiguredService(config);
-builder.Services.AddAuthenticationServices(config);
 //builder.Services.AddValidationService(config);
 builder.Services.AddMediatorBehavior();
 
