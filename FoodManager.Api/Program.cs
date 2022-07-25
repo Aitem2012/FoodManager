@@ -18,7 +18,6 @@ builder.Services.AddConfiguredService(config);
 builder.Services.AddAuthenticationServices(config);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddMediatR(typeof(CreateUserDto).Assembly);
 builder.Services.AddControllers()
     .AddFluentValidation(opt =>
     {

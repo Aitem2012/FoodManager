@@ -21,7 +21,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\FoodManager.Persistence\FoodManager.Persistence.csproj" />
-		<ProjectReference Include="..\FoodManager.Services\FoodManager.Services.csproj" />
+		
 	</ItemGroup>
 
 </Project>

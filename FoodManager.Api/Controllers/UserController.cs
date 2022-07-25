@@ -1,5 +1,5 @@
 ﻿using FoodManager.Application.DTO.Users;
-using FoodManager.Services.Abstracts;
+using FoodManager.Application.Interfaces.Abstracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,7 +48,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("updateuser",Name = nameof(UpdateUser)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpPut("updateuser", Name = nameof(UpdateUser)), ProducesResponseType(typeof(GetUserResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto model)
         {
             return Ok(await _userService.UpdateUser(model, new CancellationToken()));
