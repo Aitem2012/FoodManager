@@ -1,7 +1,7 @@
 ﻿using FoodManager.Application.DTO.OrderItems;
 using FoodManager.Application.DTO.Orders;
+using FoodManager.Application.Interfaces.Abstracts;
 using FoodManager.Common.Response;
-using FoodManager.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodManager.Api.Controllers
@@ -26,7 +26,7 @@ namespace FoodManager.Api.Controllers
         /// <param ></param>
         /// <returns></returns>
         [HttpPost(Name = nameof(AddOrder)), ProducesResponseType(typeof(BaseResponse<bool>), StatusCodes.Status201Created), ProducesDefaultResponseType]
-        public async Task<IActionResult> AddOrder([FromBody]CreateOrderDto order)
+        public async Task<IActionResult> AddOrder([FromBody] CreateOrderDto order)
         {
             return Ok(await _orderService.AddOrderAsync(order));
         }
@@ -41,7 +41,7 @@ namespace FoodManager.Api.Controllers
         {
             return Ok(await _orderService.GetOrderByIdAsync(orderId));
         }
-        
+
         /// <summary>
         /// Get an order by trackingNumber
         /// </summary>
@@ -52,7 +52,7 @@ namespace FoodManager.Api.Controllers
         {
             return Ok(await _orderService.GetOrderByTrackingNumberAsync(trackingNumber));
         }
-        
+
         /// <summary>
         /// Get an order by trackingNumber
         /// </summary>

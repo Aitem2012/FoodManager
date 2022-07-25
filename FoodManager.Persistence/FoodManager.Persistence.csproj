@@ -24,13 +24,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\FoodManager.Application\FoodManager.Application.csproj" />
 		<ProjectReference Include="..\FoodManager.Domain\FoodManager.Domain.csproj" />
-		<ProjectReference Include="..\FoodManager.Services\FoodManager.Services.csproj" />
+		<ProjectReference Include="..\FoodManager.Infrastructure\FoodManager.Infrastructure.csproj" />
 	</ItemGroup>
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command="echo &quot;App Offline&quot; /a &gt; &quot;$(ProjectDir)app_offline.htm&quot;" />
-	</Target>
-
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="del &quot;$(ProjectDir)app_offline.htm&quot;" />
-	</Target>
+	
 </Project>

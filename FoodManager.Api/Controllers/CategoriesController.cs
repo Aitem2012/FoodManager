@@ -1,6 +1,5 @@
 ﻿using FoodManager.Application.DTO.Categories;
-using FoodManager.Services.Abstracts;
-using Microsoft.AspNetCore.Authorization;
+using FoodManager.Application.Interfaces.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodManager.Api.Controllers

@@ -1,6 +1,5 @@
 ﻿using FoodManager.Application.DTO.Menus;
-using FoodManager.Services.Abstracts;
-using Microsoft.AspNetCore.Authorization;
+using FoodManager.Application.Interfaces.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodManager.Api.Controllers
@@ -36,7 +35,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param ></param>
         /// <returns></returns>
-        [HttpGet("get-available-menu",Name = nameof(GetAvailableMenus)), ProducesResponseType(typeof(IEnumerable<GetMenuResponseObjectDto>), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpGet("get-available-menu", Name = nameof(GetAvailableMenus)), ProducesResponseType(typeof(IEnumerable<GetMenuResponseObjectDto>), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> GetAvailableMenus()
         {
             return Ok(await _menuService.GetMenusAsync());
