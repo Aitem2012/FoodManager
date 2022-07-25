@@ -5,10 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command="echo &quot;App Offline&quot; /a &gt; &quot;$(ProjectDir)app_offline.htm&quot;" />
-	</Target>
-
+	
   <ItemGroup>
     <PackageReference Include="CloudinaryDotNet" Version="1.18.1" />
     <PackageReference Include="Twilio" Version="5.75.2" />
