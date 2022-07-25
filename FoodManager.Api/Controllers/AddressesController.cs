@@ -1,5 +1,5 @@
 ﻿using FoodManager.Application.DTO.Addresses;
-using FoodManager.Services.Abstracts;
+using FoodManager.Application.Interfaces.Abstracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +22,7 @@ namespace FoodManager.Api.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost("createaddress",Name = nameof(CreateAddress)), ProducesResponseType(typeof(GetAddressResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
+        [HttpPost("createaddress", Name = nameof(CreateAddress)), ProducesResponseType(typeof(GetAddressResponseObjectDto), StatusCodes.Status201Created), ProducesDefaultResponseType]
         public async Task<IActionResult> CreateAddress([FromBody] CreateAddressDto model)
         {
             return Ok(await _addressService.CreateAddress(model, new CancellationToken()));
